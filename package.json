@@ -1,0 +1,20 @@
+{
+  "name": "atomic-media-cms",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CMS backend and admin dashboard for the existing Atomic Media website mirror.",
+  "scripts": {
+    "site": "node serve-local.js",
+    "backend": "npm --prefix backend run dev",
+    "admin": "npm --prefix admin run dev",
+    "dev": "npm run backend",
+    "seed": "npm --prefix backend run seed"
+  },
+  "workspaces": [
+    "backend",
+    "admin"
+  ],
+  "dependencies": {
+    "gsap": "^3.15.0"
+  }
+}

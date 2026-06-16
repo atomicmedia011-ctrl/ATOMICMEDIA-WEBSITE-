@@ -1,0 +1,37 @@
+[
+  {
+    "id": "edan",
+    "name": "Aarav Mehta",
+    "role": "Founder &<br> CEO"
+  },
+  {
+    "id": "ffi",
+    "name": "Ishita Rao",
+    "role": "Creative Director"
+  },
+  {
+    "id": "marcolp",
+    "name": "Rohan Kapoor",
+    "role": "Marketing Strategist"
+  },
+  {
+    "id": "paul",
+    "name": "Kabir Singh",
+    "role": "Performance Marketing Specialist"
+  },
+  {
+    "id": "andrii",
+    "name": "Neha Verma",
+    "role": "UI/UX Designer"
+  },
+  {
+    "id": "luana",
+    "name": "Maya Nair",
+    "role": "Video Editor"
+  },
+  {
+    "id": "sunny",
+    "name": "Dev Sharma",
+    "role": "Web Developer"
+  }
+]
