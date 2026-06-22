@@ -2777,7 +2777,7 @@ class Object3D extends EventDispatcher {
         return e !== null && e.remove(this), this
     }
     clear() {
-        return this.remove.apply(this, this.children)
+        return this.remove(...this.children)
     }
     attach(e) {
         return this.updateWorldMatrix(!0, !1), _m1$1.copy(this.matrixWorld).invert(), e.parent !== null && (e.parent.updateWorldMatrix(!0, !1), _m1$1.multiply(e.parent.matrixWorld)), e.applyMatrix4(_m1$1), this.add(e), e.updateWorldMatrix(!1, !0), this
@@ -17030,10 +17030,10 @@ class Settings {
     OPEN_CONTACT = !1;
     TEST_BALLOONS = !1;
     BALLOON_COLOR = "";
-    USE_AUDIO = !1;
+    USE_AUDIO = browser$1.isSupportOgg && !browser$1.isMobile;
     constructor() {
         if (window.URLSearchParams) {
-            const t = (r => Array.from(r).reduce((n, a) => (n[a[0]] = a[1] === "" ? !0 : a[1], n), {}))(new URLSearchParams(window.location.search));
+            const t = (r => [...r].reduce((n, [a, l]) => (n[a] = l === "" ? !0 : l, n), {}))(new URLSearchParams(window.location.search));
             this.override(t);
             for (const r in this) r.indexOf("_PATH") > -1 && (this["LOCAL_" + r] = this[r], this[r] = CDN_PATH + this[r])
         }
@@ -18876,7 +18876,7 @@ class BlueNoise {
     }
 }
 const blueNoise = new BlueNoise,
-    COLORS$1 = settings.BALLOON_COLOR ? ["#" + settings.BALLOON_COLOR] : ["#ff6b00", "#ff8a00", "#f6000e", "#ff9f1c", "#ffc000"],
+    COLORS$1 = settings.BALLOON_COLOR ? ["#" + settings.BALLOON_COLOR] : ["#061dfb", "#ADFF00", "#f6000e", "#7e09f5", "#ffc000"],
     colorIndex = Math.floor(Math.random() * COLORS$1.length),
     fancyColor = COLORS$1[colorIndex],
     _c$1 = new Color(fancyColor);
@@ -18896,9 +18896,7 @@ let sphereData = [{
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: fancyColor,
     sss: 0,
@@ -18908,9 +18906,7 @@ let sphereData = [{
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: fancyColor,
     sss: 0,
@@ -18920,9 +18916,7 @@ let sphereData = [{
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...HARD_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -18932,9 +18926,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -18944,9 +18936,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -18956,9 +18946,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -18968,9 +18956,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...HARD_PLASTIC
 }, {
     color: "#111",
     sss: 0,
@@ -18980,9 +18966,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...STONE
 }, {
     color: "#111",
     sss: 0,
@@ -18992,9 +18976,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...STONE
 }, {
     color: "#111",
     sss: 0,
@@ -19004,9 +18986,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...STONE
 }, {
     color: "#111",
     sss: 0,
@@ -19016,9 +18996,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...HARD_PLASTIC
 }, {
     color: fancyColor,
     sss: 0,
@@ -19028,9 +19006,7 @@ let sphereData = [{
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: fancyColor,
     sss: 0,
@@ -19040,9 +19016,7 @@ let sphereData = [{
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: fancyColor,
     sss: 0,
@@ -19052,9 +19026,7 @@ let sphereData = [{
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...HARD_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -19064,9 +19036,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -19076,9 +19046,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -19088,9 +19056,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...SOFT_PLASTIC
 }, {
     color: "#ffffff",
     sss: 0,
@@ -19100,9 +19066,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...HARD_PLASTIC
 }, {
     color: "#111",
     sss: 0,
@@ -19112,9 +19076,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...STONE
 }, {
     color: "#111",
     sss: 0,
@@ -19124,9 +19086,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...STONE
 }, {
     color: "#111",
     sss: 0,
@@ -19136,9 +19096,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...STONE
 }, {
     color: "#111",
     sss: 0,
@@ -19148,9 +19106,7 @@ let sphereData = [{
     isColored: !1,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...HARD_PLASTIC
 }];
 browser$1.isMobile || sphereData.push({
     color: "#fff",
@@ -19161,9 +19117,7 @@ browser$1.isMobile || sphereData.push({
     isColored: !1,
     isBlackWhite: !0,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...GLASS
 }, {
     color: "#" + _c$1.getHexString(),
     sss: 0,
@@ -19173,9 +19127,7 @@ browser$1.isMobile || sphereData.push({
     isColored: !0,
     isBlackWhite: !1,
     radius: 1,
-    density: 1,
-    friction: 2,
-    restitution: .8
+    ...GLASS
 });
 const SPHERES_DATA = sphereData,
     vert$k = `#define GLSLIFY 1
@@ -19319,7 +19271,7 @@ class HomeBalloonsBackground {
                     value: new Color("#141515")
                 },
                 u_colorPaint: {
-                    value: new Color("#ff6b00")
+                    value: new Color("#1a2ffb")
                 },
                 u_aspect: {
                     value: 1
@@ -20519,7 +20471,7 @@ class AudioItem {
         }
     }
     setFinalVolume(e) {
-        this.audioObject && this.audioObject.setVolume(e * this.volume)
+        this.audioObject ? .setVolume(e * this.volume)
     }
     activateFilter() {
         if (this.needsFilter && this.biquadFilter) {
@@ -20684,7 +20636,7 @@ class Audios {
         t = this._counts[e] = (t + 1) % r, this.items[e + "_" + t].play()
     }
     fadeBgMusic(e, t = 1, r = void 0) {
-        SKIP_AUDIO || this.currBgMusicId !== e && (this.prevBgMusicId = this.currBgMusicId, this.currBgMusicId = e, r === void 0 && (r = t), this.items[this.prevBgMusicId] && this.items[this.prevBgMusicId].setFadeOut(r), this.items[this.currBgMusicId] && this.items[this.currBgMusicId].setFadeIn(t))
+        SKIP_AUDIO || this.currBgMusicId !== e && (this.prevBgMusicId = this.currBgMusicId, this.currBgMusicId = e, r === void 0 && (r = t), this.items[this.prevBgMusicId] ? .setFadeOut(r), this.items[this.currBgMusicId] ? .setFadeIn(t))
     }
     update(e) {
         if (!SKIP_AUDIO && (globalAudios.update(e), this.listener)) {
@@ -20905,8 +20857,8 @@ varying vec3 v_color;varying vec2 v_uv;void main(){float d=length(v_uv-.5)*2.;gl
         scrollToRatioFactors: [.4, 1.3],
         boxMin: new Vector3(-.0112049, -.0141946, 0),
         boxMax: new Vector3(1.01357, .718671, 0),
-        color0: "#ff9f1c",
-        color1: "#ff6b00"
+        color0: "#5a90ff",
+        color1: "#2a38ee"
     }, {
         fileName: "line_goal",
         aoThreshold: 1e-4,
@@ -20917,8 +20869,8 @@ varying vec3 v_color;varying vec2 v_uv;void main(){float d=length(v_uv-.5)*2.;gl
         scrollToRatioFactors: [1.2, 2],
         boxMin: new Vector3(-.0180006, -.00963629, 0),
         boxMax: new Vector3(1.01777, .850395, 0),
-        color0: "#ffb347",
-        color1: "#ff6b00"
+        color0: "#94fffb",
+        color1: "#1285dc"
     }, {
         fileName: "line_capability",
         aoThreshold: 1e-4,
@@ -21061,7 +21013,7 @@ class Line {
 const isNode = typeof global < "u" && {}.toString.call(global) === "[object global]",
     isBun = typeof Bun < "u",
     isDeno = typeof Deno < "u",
-    isCloudflareWorker = typeof WebSocketPair == "function" && typeof caches != "undefined" && typeof caches.default < "u",
+    isCloudflareWorker = typeof WebSocketPair == "function" && typeof caches ? .default < "u",
     isServerRuntime = isNode || isBun || isDeno || isCloudflareWorker;
 
 function getMethodName(o, e) {
@@ -21678,7 +21630,9 @@ class TimingSrcConnector extends EventTarget {
     constructor(e, t) {
         let r = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {},
             n = arguments.length > 3 ? arguments[3] : void 0;
-        super(), this.logger = n, this.init(t, e, Object.assign({}, defaultOptions, r))
+        super(), this.logger = n, this.init(t, e, { ...defaultOptions,
+            ...r
+        })
     }
     disconnect() {
         this.dispatchEvent(new Event("disconnect"))
@@ -21737,7 +21691,7 @@ class TimingSrcConnector extends EventTarget {
         }
     }
     log(e) {
-        this.logger && this.logger(`TimingSrcConnector: ${e}`)
+        this.logger ? .(`TimingSrcConnector: ${e}`)
     }
     speedAdjustment = 0;
     adjustSpeed = async (e, t) => {
@@ -22231,7 +22185,7 @@ class HomeReelSection {
                     value: this.ufxMeshRadialCenter
                 },
                 u_color: {
-                    value: new Color("#C75A00")
+                    value: new Color(1716219)
                 },
                 u_showRatio: {
                     value: 0
@@ -24600,7 +24554,7 @@ function jsonp(o, e, t) {
     }, o += (~o.indexOf("?") ? "&" : "?") + a + "=" + c(n), o = o.replace("?&", "?"), debug('jsonp req "%s"', o), f = document.createElement("script"), f.src = o, u.parentNode.insertBefore(f, u), v
 }
 const jsonp$1 = getDefaultExportFromCjs(jsonp_1),
-    MAILCHIMP_URL = "",
+    MAILCHIMP_URL = "https://lusion.us20.list-manage.com/subscribe/post?u=ea813c53ac6d7a0b76f2e36a1&amp;id=44b41b41bf&amp;v_id=4233&amp;f_id=001e18e7f0",
     getAjaxUrl = o => o.replace("/post?", "/post-json?");
 class NewletterForm {
     isSendingTheNewletterRequest = !1;
@@ -24919,7 +24873,7 @@ class GoalTunnelsBackground {
                     value: new Color
                 },
                 u_atmosphereColor: {
-                    value: new Color("#ff6b00")
+                    value: new Color("#4169E1")
                 },
                 u_earthTexture: {
                     value: this.earthTexture
@@ -24979,7 +24933,7 @@ class GoalWhiteTunnelParticles {
                     value: 0
                 },
                 u_color: {
-                    value: new Color("#ff9f1c")
+                    value: new Color("#689aff")
                 },
                 u_planes: {
                     value: c
@@ -25503,7 +25457,7 @@ class GoalSection {
             }
             let K = properties.viewportHeight * .2 * (1 - math.saturate(j.ratio)),
                 G = Math.sqrt(properties.viewportWidth * properties.viewportWidth + properties.viewportHeight * properties.viewportHeight);
-            p = math.mix(1, G / Math.min(w.width, w.height), E), goalTunnelGlass.domFrameScale = p, te < 1 ? g = properties.viewportWidth * .5 - w.left - w.width * .5 : g = 0, v = -(w.top + K - scrollManager.scrollPixel + w.height * .5 - properties.viewportHeight * .5 + u), goalTunnels.frameHeight = w.height, goalTunnelAstronauts.extraCameraViewportOffsetX = -math.fit(q.ratio, 0, 1, 0, -w.left - w.width * .5 + properties.viewportWidth * .5, ease.cubicInOut), goalTunnelAstronauts.extraCameraViewportOffsetY = -ce, properties.cameraViewportOffsetX = g * (1 - E), properties.cameraViewportOffsetY = v * (1 - E), b.u_dom2Texture.value = re, b.u_frameOffset.value.set(g * E, v * E), b.u_frameScale.value = p, b.u_frameRotate.value = f, b.u_radiusScale.value = I, b.u_bgColor.value.setStyle(C < .5 ? "#f0f1fa" : properties.blackColorHex), b.u_glowRadius.value = F, b.u_glowUpperBound.value = k, b.u_glowPow.value = L, b.u_glowTint.value = D, properties.screenPaintOffsetRatio = 1 - E, this.frameBgMesh.syncRect(w.left, w.top + K, w.width, w.height), this.frameBgMesh.update(-scrollManager.scrollPixel + u), this.frameBgMesh.visible = E < 1, this.frameBgMesh.visible = E < 1 && te < 1, goalTunnelGlass.ratio = math.fit(q.ratio, 0, 1, 0, 1, ease.sineOut), goalTunnelGlass.container && (goalTunnelGlass.container.visible = goalTunnelGlass.container.visible && goalTunnelGlass.ratio > 0), b.u_dom2Offset.value.set(R.left + R.width * .5 - w.left - w.width * .5, R.top + R.height * .5 - w.top - w.height * .5 + Te), b.u_dom2WH.value.set(R.width, R.height), this.domContextInner.style.transform = `translate3d(0, ${le}px, 0)`, this.domContextInner.style.visibility = this.frameBgMesh.visible ? "visible" : "hidden";
+            p = math.mix(1, G / Math.min(w.width, w.height), E), goalTunnelGlass.domFrameScale = p, te < 1 ? g = properties.viewportWidth * .5 - w.left - w.width * .5 : g = 0, v = -(w.top + K - scrollManager.scrollPixel + w.height * .5 - properties.viewportHeight * .5 + u), goalTunnels.frameHeight = w.height, goalTunnelAstronauts.extraCameraViewportOffsetX = -math.fit(q.ratio, 0, 1, 0, -w.left - w.width * .5 + properties.viewportWidth * .5, ease.cubicInOut), goalTunnelAstronauts.extraCameraViewportOffsetY = -ce, properties.cameraViewportOffsetX = g * (1 - E), properties.cameraViewportOffsetY = v * (1 - E), b.u_dom2Texture.value = re, b.u_frameOffset.value.set(g * E, v * E), b.u_frameScale.value = p, b.u_frameRotate.value = f, b.u_radiusScale.value = I, b.u_bgColor.value.setStyle(C < .5 ? properties.offWhiteColorHex : properties.blackColorHex), b.u_glowRadius.value = F, b.u_glowUpperBound.value = k, b.u_glowPow.value = L, b.u_glowTint.value = D, properties.screenPaintOffsetRatio = 1 - E, this.frameBgMesh.syncRect(w.left, w.top + K, w.width, w.height), this.frameBgMesh.update(-scrollManager.scrollPixel + u), this.frameBgMesh.visible = E < 1, this.frameBgMesh.visible = E < 1 && te < 1, goalTunnelGlass.ratio = math.fit(q.ratio, 0, 1, 0, 1, ease.sineOut), goalTunnelGlass.container && (goalTunnelGlass.container.visible = goalTunnelGlass.container.visible && goalTunnelGlass.ratio > 0), b.u_dom2Offset.value.set(R.left + R.width * .5 - w.left - w.width * .5, R.top + R.height * .5 - w.top - w.height * .5 + Te), b.u_dom2WH.value.set(R.width, R.height), this.domContextInner.style.transform = `translate3d(0, ${le}px, 0)`, this.domContextInner.style.visibility = this.frameBgMesh.visible ? "visible" : "hidden";
             let U = scrollManager.getDomRange(this.domContext),
                 N = properties.viewportWidth * .5 - U.screenX - properties.cameraViewportOffsetX,
                 he = properties.viewportHeight * .5 - U.screenY - properties.cameraViewportOffsetY - le;
@@ -25971,7 +25925,8 @@ class ProjectDetailsData {
     itemDataList = [];
     constructor(e, t) {
         this.id = e, this.title = t.querySelector("#project-details-title").innerHTML, this.desc = t.querySelector("#project-details-desc").innerHTML, this.ctaTitle = t.querySelector("#project-details-launch-cta-text").textContent, this.ctaUrl = t.querySelector("#project-details-launch-cta").href;
-        let r = Object.assign({}, t.querySelector("#project-details").dataset);
+        let r = { ...t.querySelector("#project-details").dataset
+        };
         this.colorBg = r.colorBg, this.colorBtnBg = r.colorBtnBg, this.colorBtnBgHover = r.colorBtnBgHover, this.colorBtnText = r.colorBtnText, this.colorBtnTextHover = r.colorBtnTextHover, this.colorHighlight = r.colorHighlight, this.colorIconBg = r.colorIconBg, this.colorIconColor = r.colorIconColor, this.colorText = r.colorText, this.shadow = parseFloat(r.shadow), (this.domServiceSideListItems = Array.from(t.querySelectorAll("#project-details-side-list-services > *"))).forEach(l => {
             l.remove()
         }), (this.domLinkSideListItems = Array.from(t.querySelectorAll("#project-details-side-list-links > *"))).forEach(l => {
@@ -25980,10 +25935,12 @@ class ProjectDetailsData {
         let n = Array.from(t.querySelectorAll(".project-details-item"));
         for (let l = 0; l < n.length; l++) {
             let c = n[l],
-                u = Object.assign({}, c.dataset);
+                u = { ...c.dataset
+                };
             c.classList.contains("is-text") ? u.content = c.querySelector(".project-details-item-text").textContent : (u.width = parseFloat(u.width), u.height = parseFloat(u.height), u.parallax = parseFloat(u.parallax || 1), u.fullscreen = u.fullscreen !== void 0), this.itemDataList.push(u), c.remove()
         }
-        let a = Object.assign({}, t.querySelector("#project-details-preview").dataset);
+        let a = { ...t.querySelector("#project-details-preview").dataset
+        };
         this.nextColorBg = a.nextColorBg, this.nextColorText = a.nextColorText, this.nextId = a.nextId, this.nextShadow = parseFloat(a.nextShadow), this.nextTitle = t.querySelector("#project-details-preview-title").textContent
     }
 }
@@ -26564,7 +26521,7 @@ class HomePage extends Page {
                 let t = !0,
                     r = !1,
                     n = !1;
-                scrollManager.getDomRange(homeGoalSection.domContainer).screenRatio == 1 ? (properties.bgColor.setStyle(properties.blackColorHex), t = !1, r = !0) : (properties.bgColor.setStyle(properties.offWhiteColorHex), t = !0, r = !1), homeGoalSection.uiBgColorNeedsOverride && (n = !1, homeGoalSection.isUIBgBlack ? (t = !1, r = !0) : (t = !0, r = !1)), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.remove("is-black-bg", "is-white-bg", "is-blue-bg")
+                scrollManager.getDomRange(homeGoalSection.domContainer).screenRatio == 1 ? (properties.bgColor.setStyle(properties.blackColorHex), t = !1, r = !0) : (properties.bgColor.setStyle(properties.offWhiteColorHex), t = !0, r = !1), homeGoalSection.uiBgColorNeedsOverride && (n = !1, homeGoalSection.isUIBgBlack ? (t = !1, r = !0) : (t = !0, r = !1)), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.toggle("is-black-bg", r), document.documentElement.classList.toggle("is-white-bg", t), document.documentElement.classList.toggle("is-blue-bg", n)
             }
             this.updateAudio && homePageAudios.update(e)
         }
@@ -27711,11 +27668,11 @@ class AboutHeroFaces {
 const aboutHeroFaces = new AboutHeroFaces,
     fragmentShader$1 = `#define GLSLIFY 1
 uniform sampler2D u_texture;uniform vec3 u_colorBurn;uniform float u_colorBurnAlpha;uniform vec3 u_colorDodge;uniform float u_colorDodgeAlpha;varying vec2 v_uv;vec3 colorDodge(in vec3 src,in vec3 dst){return mix(step(0.,src)*(min(vec3(1.),dst/(1.-src))),vec3(1.),step(1.,dst));}vec3 colorBurn(in vec3 src,in vec3 dst){return mix(step(0.,src)*(1.-min(vec3(1.),(1.-dst)/src)),vec3(1.),step(1.,dst));}void main(){vec4 texture=texture2D(u_texture,v_uv);vec3 colorBurn=mix(texture.rgb,colorBurn(u_colorBurn,texture.rgb),u_colorBurnAlpha);vec3 colorDodge=mix(texture.rgb,colorDodge(u_colorDodge,texture.rgb),u_colorDodgeAlpha);texture.rgb=mix(colorBurn,colorDodge,texture.rgb);gl_FragColor=texture;}`;
-let _sceneColorBurn = new Color("#ff9f1c"),
-    _sceneColorDodge = new Color("#ff6b00"),
+let _sceneColorBurn = new Color("#00f0ff"),
+    _sceneColorDodge = new Color("#005aff"),
     _sceneColorBurnAlpha = .15,
     _sceneColorDodgeAlpha = .12,
-    _hudColorBurn = new Color("#ffb347"),
+    _hudColorBurn = new Color("#79a8ff"),
     _hudColorDodge = new Color("#a5ff44"),
     _hudColorBurnAlpha = 1,
     _hudColorDodgeAlpha = .7;
@@ -27940,7 +27897,11 @@ class AboutWhoLogo {
     containerWidth = 0;
     hideRatio = 0;
     preInit(e) {
-        this.fromDom = e.querySelector("#about-who-title-main-logo"), this.toDom = e.querySelector("#about-who-title-left-2")
+        this.fromDom = e.querySelector("#about-who-title-main-logo"), this.toDom = e.querySelector("#about-who-title-left-2"), aboutPage.postUfxContainer.add(this.container), this.toMesh = new UfxMesh({
+            refDom: this.toDom
+        }), properties.loader.add(settings.MODEL_PATH + "about/logo_text.buf", {
+            onLoad: this._onGeometryLoad.bind(this)
+        })
     }
     _onGeometryLoad(e) {
         let t = this.toMesh.material.uniforms;
@@ -27971,10 +27932,6 @@ class AboutWhoLogo {
         _needsSync = !0
     }
     update(e, t, r, n, a) {
-        if (this.fromDom) {
-            let l = math.fit(this.hideRatio, 0, .35, 1, 0, ease.cubicInOut);
-            this.fromDom.style.opacity = l, this.fromDom.style.transform = `translate3d(${r}px, ${t-n}px, 0)`, this.fromDom.style.visibility = l > .01 ? "visible" : "hidden"
-        }
         this.mesh && (_needsSync && (_needsSync = !1, this.mesh.syncDom(r, t - n), this.toMesh.syncDom(r, t - a)), this.mesh.material.uniforms.u_showRatio.value = math.fit(aboutPage.time, .5, 1.5, 0, 1), properties.useMobileLayout ? (this.mesh.material.uniforms.u_showRatio.value *= 1 - this.hideRatio, this.mesh.material.uniforms.u_hideRatio.value = 0) : this.mesh.material.uniforms.u_hideRatio.value = this.hideRatio, this.mesh.update(r, t), this.toMesh.update(r, t))
     }
 }
@@ -27985,7 +27942,7 @@ class WhoSubsectionWeAre {
     domLeftTexts;
     logoHideRatio = 0;
     preInit(e) {
-        this.domContainer = e.querySelector("#about-who-subsection-we-are"), this.domScroll = e.querySelector("#about-who-title-main-scroll"), this.domLeftTexts = e.querySelectorAll("#about-who-title-left-1, #about-who-title-left-2, #about-who-title-left-3, #about-who-title-left-4 span"), this.domRightTexts = e.querySelectorAll(".about-who-title-right-text"), aboutWhoLogo.preInit(e)
+        this.domContainer = e.querySelector("#about-who-subsection-we-are"), this.domScroll = e.querySelector("#about-who-title-main-scroll"), this.domLeftTexts = e.querySelectorAll("#about-who-title-left-1, #about-who-title-left-2 svg, #about-who-title-left-3, #about-who-title-left-4 span"), this.domRightTexts = e.querySelectorAll(".about-who-title-right-text"), aboutWhoLogo.preInit(e)
     }
     init() {
         aboutWhoLogo.init()
@@ -28186,9 +28143,10 @@ class WhoSubsectionTeam {
     };
     domRightWidth = 0;
     preInit(e) {
-        this.domContainer = e.querySelector("#about-who-subsection-team"), this.domProgress = e.querySelector("#about-who-team-progress"), this.domLeft = e.querySelector("#about-who-team-left"), this.domLeftInfo = e.querySelector("#about-who-team-info"), this.domLeftNameIcon = e.querySelector("#about-who-team-name-icon"), this.domLeftNamePlaceholder = e.querySelector("#about-who-team-name-placeholder"), this.domLeftNameText = e.querySelector("#about-who-team-name-text"), this.domLeftJobPlaceholder = e.querySelector("#about-who-team-job-placeholder"), this.domLeftJobText = e.querySelector("#about-who-team-job-text"), this.domNumber = e.querySelector("#about-who-team-number"), this.domTopCompass = e.querySelector("#about-who-team-top-compass"), this.domBottomCompass = e.querySelector("#about-who-team-bottom-compass"), this.domDots = e.querySelector("#about-who-team-dots"), this.domLetterContainer = e.querySelector("#about-who-team-letter-container"), this.domIndicator = this.domProgress.querySelector("#about-who-team-indicator"), this.domIndicatorInner = this.domProgress.querySelector("#about-who-team-indicator-inner"), this.domIndicator._prevActiveRatio = -1, this.domRight = e.querySelector("#about-who-team-right"), this.domTitle = e.querySelector("#about-who-team-title"), this.domDesc = e.querySelector("#about-who-team-desc"), this.domDescText = e.querySelector("#about-who-team-desc-text"), this.domDescSquare = e.querySelector("#about-who-team-square"), this.domCursor = e.querySelector("#about-who-face-cursor"), this.domCursorArrow = e.querySelector("#about-who-face-cursor-arrow"), this.domFaces = e.querySelector("#about-who-team-faces"), this.domPhoto = e.querySelector("#about-who-team-photo"), this.domMobileSwipe = e.querySelector("#about-who-team-left-mobile-tips"), this.domTeamNumber = e.querySelector("#about-who-team-number-center-item"), properties.loader.add(settings.TEAM_PATH + "team.json", {
+        this.domContainer = e.querySelector("#about-who-subsection-team"), this.domProgress = e.querySelector("#about-who-team-progress"), this.domLeft = e.querySelector("#about-who-team-left"), this.domLeftInfo = e.querySelector("#about-who-team-info"), this.domLeftNameIcon = e.querySelector("#about-who-team-name-icon"), this.domLeftNamePlaceholder = e.querySelector("#about-who-team-name-placeholder"), this.domLeftNameText = e.querySelector("#about-who-team-name-text"), this.domLeftJobPlaceholder = e.querySelector("#about-who-team-job-placeholder"), this.domLeftJobText = e.querySelector("#about-who-team-job-text"), this.domNumber = e.querySelector("#about-who-team-number"), this.domTopCompass = e.querySelector("#about-who-team-top-compass"), this.domBottomCompass = e.querySelector("#about-who-team-bottom-compass"), this.domDots = e.querySelector("#about-who-team-dots"), this.domLetterContainer = e.querySelector("#about-who-team-letter-container"), this.domIndicator = this.domProgress.querySelector("#about-who-team-indicator"), this.domIndicatorInner = this.domProgress.querySelector("#about-who-team-indicator-inner"), this.domIndicator._prevActiveRatio = -1, this.domRight = e.querySelector("#about-who-team-right"), this.domTitle = e.querySelector("#about-who-team-title"), this.domDesc = e.querySelector("#about-who-team-desc"), this.domDescText = e.querySelector("#about-who-team-desc-text"), this.domDescSquare = e.querySelector("#about-who-team-square"), this.domCursor = e.querySelector("#about-who-face-cursor"), this.domCursorArrow = e.querySelector("#about-who-face-cursor-arrow"), this.domFaces = e.querySelector("#about-who-team-faces"), this.domMobileSwipe = e.querySelector("#about-who-team-left-mobile-tips"), this.domTeamNumber = e.querySelector("#about-who-team-number-center-item"), properties.loader.add(settings.TEAM_PATH + "team.json", {
             onLoad: t => {
-                this._applyTeamData(t, !0), this._loadCmsTeamData()
+                this.teamDataList = t, this._createUIElements();
+                for (let r = 0; r < t.length; r++) t[r].index = r, this.teamDataMap[t[r].id] = t[r]
             }
         }), aboutHeroFaces.load(this.faceId), this.letterMesh = new UfxMesh({
             uniforms: {
@@ -28222,7 +28180,7 @@ class WhoSubsectionTeam {
     onPageShow() {
         aboutHeroFaces.showRatio = 0;
         for (let e = 0; e < this.teamDataList.length; e++) {
-            let t = this.teamDataList[e].modelId || this.teamDataList[e].id;
+            let t = this.teamDataList[e].id;
             aboutHeroFaces.load(t)
         }
         this.facesCount = this.teamDataList.length, this.updateTeamNumberUI()
@@ -28261,37 +28219,12 @@ class WhoSubsectionTeam {
     _updateRect(e, t, r) {
         e.x = t.left - aboutWhoSection.subsectionContainerOffsetX - this.containerOffsetX, e.y = t.top - aboutWhoSection.subsectionContainerOffsetY + scrollManager.scrollPixel, e.width = t.width, e.height = t.height, e.offsetX = t.left - r.left, e.offsetY = t.top - r.top
     }
-    _applyTeamData(e, t = !1) {
-        const r = ["edan", "ffi", "marcolp", "paul", "andrii", "luana", "sunny"];
-        e = (e || []).filter(Boolean).map((n, a) => ({
-            id: n._id || n.id || `core-${a}`,
-            modelId: n.modelId || (n.id && r.includes(n.id) ? n.id : r[a % r.length]),
-            name: n.name || "Atomic Media",
-            role: n.role || n.position || "Core Member",
-            bio: n.bio || "",
-            photo: n.photo || n.profilePicture?.url || ""
-        }));
-        if (!e.length) return;
-        this.teamDataList = e, this.teamDataMap = {};
-        for (let n = 0; n < e.length; n++) e[n].index = n, this.teamDataMap[e[n].id] = e[n], aboutHeroFaces.load(e[n].modelId || e[n].id);
-        this.facesCount = e.length, t && this._createUIElements(), this.updateTeamNumberUI(), this._changeFaceUIByIndex(math.mod(this.targetActiveFaceIndex, this.teamDataList.length))
-    }
-    _loadCmsTeamData() {
-        fetch("/api/public/site").then(e => e.ok ? e.json() : null).then(e => {
-            let t = e && Array.isArray(e.team) ? e.team : [];
-            t = t.filter(r => r && r.enabled !== !1 && r.isCore !== !1).sort((r, n) => (r.order || 0) - (n.order || 0));
-            t.length && this._applyTeamData(t)
-        }).catch(() => {})
-    }
     _changeFaceUIByIndex(e) {
         e = math.mod(e, this.teamDataList.length);
-        let t = this.teamDataList[e],
-            r = this.faceId = t.modelId || t.id,
-            n = t.name,
-            a = t.role,
-            l = t.bio,
-            c = t.photo;
-        this.domLeftNamePlaceholder.innerHTML = n, textAnimationHelper.setMatrixText(this.domLeftNameText, n, 0, 1, 3, 1 / 30), this.domLeftJobPlaceholder.innerHTML = a, textAnimationHelper.setMatrixText(this.domLeftJobText, a, 0, 1, 3, 1 / 30), l && (this.domDescText.textContent = l), this.domPhoto && (c ? (this.domPhoto.src = c, this.domPhoto.className = "--is-visible", this.domFaces && this.domFaces.classList.add("--has-photo")) : (this.domPhoto.removeAttribute("src"), this.domPhoto.className = "", this.domFaces && this.domFaces.classList.remove("--has-photo")))
+        let t = this.faceId = this.teamDataList[e].id,
+            r = this.teamDataMap[t].name,
+            n = this.teamDataMap[t].role;
+        this.domLeftNamePlaceholder.innerHTML = r, textAnimationHelper.setMatrixText(this.domLeftNameText, r, 0, 1, 3, 1 / 30), this.domLeftJobPlaceholder.innerHTML = n, textAnimationHelper.setMatrixText(this.domLeftJobText, n, 0, 1, 3, 1 / 30)
     }
     _createUIElements() {
         let e = document.createElement("div");
@@ -28374,7 +28307,7 @@ class WhoSubsectionTeam {
                 let I = Math.floor(math.mod(this.faceIndex, this.teamDataList.length)),
                     F = math.mod(I + 1, this.teamDataList.length),
                     k = this.faceIndex - Math.floor(this.faceIndex);
-                aboutHeroFaces.currId = this.teamDataList[I].modelId || this.teamDataList[I].id, aboutHeroFaces.nextId = this.teamDataList[F].modelId || this.teamDataList[F].id, aboutHeroFaces.transitionRatio = k;
+                aboutHeroFaces.currId = this.teamDataList[I].id, aboutHeroFaces.nextId = this.teamDataList[F].id, aboutHeroFaces.transitionRatio = k;
                 let L = this.domIndicatorInner;
                 L.style.transform = "scaleX(" + this.faceIndexTimer + ")", this.domIndicator.style.transform = "scaleX(" + ease.expoInOut(this.itemActiveRatio) + ")";
                 let D = this.itemActiveRatio > .95 ? 1 : (Math.cos(this.itemActiveRatio * 17.213) * .5 + .5) * Math.pow(this.itemActiveRatio, .25);
@@ -29782,7 +29715,7 @@ class AboutAwardSection {
     }
 }
 const aboutAwardSection = new AboutAwardSection,
-    NUMBER_OF_CARDS = 6;
+    NUMBER_OF_CARDS = 4;
 class AboutCapabilitySection {
     domContainer;
     domList;
@@ -29942,7 +29875,7 @@ class AboutPage extends Page {
         if (pagesManager.scrollTargetPage == this) {
             properties.bgColor.setStyle(properties.blackColorHex);
             let a = scrollManager.getDomRange(aboutCapabilitySection.domContainer);
-            properties.bgColor.lerp(_c.setStyle("#B2B2B2"), math.fit(a.screenRatio, -1, -.5, 0, 1)), a.screenRatio > -.75 ? (n = !0, r = !1) : (n = !1, r = !0), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.remove("is-black-bg", "is-white-bg", "is-blue-bg")
+            properties.bgColor.lerp(_c.setStyle(properties.blueColorHex), math.fit(a.screenRatio, -1, -.5, 0, 1)), a.screenRatio > -.75 ? (n = !0, r = !1) : (n = !1, r = !0), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.toggle("is-black-bg", r), document.documentElement.classList.toggle("is-white-bg", t), document.documentElement.classList.toggle("is-blue-bg", n)
         }
         aboutWhoSection.update(e), aboutClientSection.update(e), aboutAwardSection.update(e), aboutCapabilitySection.update(e), aboutPageAudios.update(r)
     }
@@ -30049,7 +29982,7 @@ class ProjectsPage extends Page {
                 let t = !0,
                     r = !1,
                     n = !1;
-                document.documentElement.classList.remove("is-black-bg", "is-white-bg", "is-blue-bg")
+                document.documentElement.classList.toggle("is-black-bg", r), document.documentElement.classList.toggle("is-white-bg", t), document.documentElement.classList.toggle("is-blue-bg", n)
             }
             projectsPageAudios.update(e)
         }
@@ -30830,7 +30763,7 @@ float a=dot(v_colorMix,texture2D(u_texture,v_uv).rgb);gl_FragColor=vec4(v_color,
 gl_FragColor=vec4(u_color,1.);
 #endif
 }`;
-let COLORS = ["#ff383c", "#ff6b00", "#ff9f1c", "#1eff5d", "#cfff0f", "#d6e4ec", "#bbcbda", "#7a8d9b", "#262229"];
+let COLORS = ["#ff383c", "#0029ff", "#bb2bff", "#1eff5d", "#cfff0f", "#d6e4ec", "#bbcbda", "#7a8d9b", "#262229"];
 class FlipAnimation {
     PRESSURE_ITERATION = 60;
     NUM_PARTICLES_ITERS = 4;
@@ -30873,7 +30806,7 @@ class FlipAnimation {
             value: new Vector2
         },
         u_color: {
-            value: new Color("#ff6b00")
+            value: new Color("#1A2FFB")
         },
         u_texture: {
             value: null
@@ -32309,7 +32242,9 @@ class Fsr extends PostEffect {
 const XHRItem = properties.loader.ITEM_CLASSES.xhr;
 class BufItem extends XHRItem {
     constructor(e, t) {
-        super(e, Object.assign({}, t, { responseType: "arraybuffer" }))
+        super(e, { ...t,
+            responseType: "arraybuffer"
+        })
     }
     retrieve() {
         return !1
@@ -33515,7 +33450,9 @@ class EXRLoader extends DataTextureLoader {
 const AnyItem$2 = properties.loader.ITEM_CLASSES.any;
 class EXRItem extends AnyItem$2 {
     constructor(e, t) {
-        super(e, Object.assign({}, t, { responseType: "type" })), this.EXRLoader = new EXRLoader
+        super(e, { ...t,
+            responseType: "type"
+        }), this.EXRLoader = new EXRLoader
     }
     retrieve() {
         return !1
@@ -33646,7 +33583,7 @@ class App {
         settings.WEBGL_OFF || (cameraControls.preInit(), visuals.preInit(), audios.preInit())
     }
     init() {
-        settings.WEBGL_OFF || (properties.smaa && properties.smaa.updateTextures(), cameraControls.init(), visuals.init(), audios.init(), settings.IS_DEV === !1 && (console.clear && console.clear(), console.log("%c Created for Atomic Media: https://atomicmedia.in/", "border:2px solid gray; padding:5px; font-family:monospace; font-size:11px;")))
+        settings.WEBGL_OFF || (properties.smaa && properties.smaa.updateTextures(), cameraControls.init(), visuals.init(), audios.init(), settings.IS_DEV === !1 && (console.clear && console.clear(), console.log("%c Created by Lusion: https://lusion.co/", "border:2px solid gray; padding:5px; font-family:monospace; font-size:11px;")))
     }
     start() {
         visuals.start()
@@ -33794,8 +33731,6 @@ class FontItem extends AnyItem {
         e.style.position = "fixed", e.style.left = e.style.top = 0, e.style.visibility = "hidden", document.body.appendChild(e), FontItem.dom = e
     }
     _loadFunc(e, t, r) {
-        t();
-        return;
         let n = e.split(","),
             a = [];
         for (let g = 0; g < n.length; g++) a.push(n[g].trim());
