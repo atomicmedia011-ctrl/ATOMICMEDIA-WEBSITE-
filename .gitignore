@@ -23,3 +23,5 @@ chrome-stdout.txt
 chrome-stderr.txt
 powershell.cmd
 ATOMIC
+
+.vercel

@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "buildCommand": "npm --prefix admin run build",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{admin/dist/**,lusion.co landing page(1)/**,lusion.co project(1)/**}",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
+}

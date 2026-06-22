@@ -25,6 +25,17 @@ CLOUDINARY_API_SECRET=<cloudinary-api-secret>
 
 Cloudinary needs the `cloud_name`, API key, and API secret. The label `atomic media` is not enough if it is not the actual cloud name shown in Cloudinary Dashboard > Programmable Media > API Keys.
 
+## Vercel
+
+This project can run on Vercel through `api/index.js`, which exports the Express app as a serverless function.
+
+```bash
+npm --prefix admin run build
+vercel --prod
+```
+
+Set the production environment variables in Vercel before deploying.
+
 ## Render
 
 1. Push this repo to GitHub.
