@@ -3903,7 +3903,10 @@ html.atomic-menu-open .project-list {
    ============================================================ */
 html.atomic-theme-dark,
 html.atomic-theme-dark body {
-  background: #000 !important;
+  background:
+    radial-gradient(1000px 620px at 50% 82%, rgba(255, 106, 0, 0.08) 0%, rgba(255, 106, 0, 0.03) 22%, transparent 58%),
+    radial-gradient(900px 480px at 50% 100%, rgba(24, 24, 24, 0.48) 0%, transparent 68%),
+    linear-gradient(180deg, #070707 0%, #020202 54%, #000 100%) !important;
   background-color: #000 !important;
   color: #fff !important;
   color-scheme: dark;
@@ -3920,15 +3923,35 @@ html.atomic-theme-dark #footer-section,
 html.atomic-theme-dark .atomic-service-page,
 html.atomic-theme-dark .atomic-service-hero,
 html.atomic-theme-dark .atomic-feature-section {
+  background:
+    radial-gradient(1000px 620px at 50% 82%, rgba(255, 106, 0, 0.08) 0%, rgba(255, 106, 0, 0.03) 22%, transparent 58%),
+    radial-gradient(900px 480px at 50% 100%, rgba(24, 24, 24, 0.48) 0%, transparent 68%),
+    linear-gradient(180deg, #070707 0%, #020202 54%, #000 100%) !important;
   background-color: #000 !important;
   color: #fff !important;
 }
 
 html.atomic-theme-dark #ui::before {
-  background:
-    radial-gradient(760px 520px at 50% 82%, rgba(255, 106, 0, 0.1), transparent 68%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.72)) !important;
-  opacity: 1 !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.atomic-theme-dark #home-reel::before,
+html.atomic-theme-dark #home-featured::before,
+html.atomic-theme-dark #home-goal::before,
+html.atomic-theme-dark #page-extra-sections::before,
+html.atomic-theme-dark #end-section::before,
+html.atomic-theme-dark #footer-section::before,
+html.atomic-theme-dark #home-reel::after,
+html.atomic-theme-dark #home-featured::after,
+html.atomic-theme-dark #home-goal::after,
+html.atomic-theme-dark #page-extra-sections::after,
+html.atomic-theme-dark #end-section::after,
+html.atomic-theme-dark #footer-section::after {
+  background: transparent !important;
+  box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -3967,13 +3990,14 @@ html.atomic-theme-dark #atomic-theme-toggle span[aria-current="true"] {
 
 html.atomic-theme-white,
 html.atomic-theme-white body {
-  --color-off-white: #e7e7eb;
+  --color-off-white: #ececef;
   --color-black: #171717;
   --color-blue: #b9bac1;
   background:
-    radial-gradient(900px 540px at 50% 8%, rgba(255, 255, 255, 0.95), transparent 62%),
-    radial-gradient(820px 520px at 74% 72%, rgba(255, 106, 0, 0.08), transparent 70%),
-    linear-gradient(135deg, #f6f6f7 0%, #ececf0 46%, #d8d8de 100%) !important;
+    radial-gradient(760px 470px at 50% 80%, rgba(255, 106, 0, 0.12), transparent 66%),
+    radial-gradient(820px 460px at 74% 78%, rgba(17, 17, 17, 0.05), transparent 68%),
+    linear-gradient(90deg, #ffffff 0%, #f7f7f8 34%, #efeff2 66%, #ffffff 100%) !important;
+  background-color: #efeff2 !important;
   color: #fff !important;
   color-scheme: light;
 }
@@ -3986,18 +4010,18 @@ html.atomic-theme-white #home-goal,
 html.atomic-theme-white #page-extra-sections,
 html.atomic-theme-white #end-section {
   background:
-    radial-gradient(900px 560px at 52% 42%, rgba(120, 96, 104, 0.24), transparent 64%),
-    linear-gradient(135deg, #b7b8bd 0%, #a9aaaf 46%, #8f9096 100%) !important;
+    radial-gradient(760px 470px at 50% 80%, rgba(255, 106, 0, 0.12), transparent 66%),
+    radial-gradient(820px 460px at 74% 78%, rgba(17, 17, 17, 0.05), transparent 68%),
+    linear-gradient(90deg, #ffffff 0%, #f7f7f8 34%, #efeff2 66%, #ffffff 100%) !important;
+  background-color: #efeff2 !important;
   color: #fff !important;
 }
 
 html.atomic-theme-white #ui::before {
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
-    radial-gradient(ellipse at 52% 62%, rgba(120, 76, 86, 0.24) 0%, transparent 60%) !important;
-  opacity: 1 !important;
-  backdrop-filter: blur(10px) saturate(1.05) !important;
-  -webkit-backdrop-filter: blur(10px) saturate(1.05) !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 html.atomic-theme-white #home-reel *,
@@ -4005,6 +4029,24 @@ html.atomic-theme-white #home-featured *,
 html.atomic-theme-white #home-goal *,
 html.atomic-theme-white #end-section * {
   color: inherit !important;
+}
+
+html.atomic-theme-white #home-reel::before,
+html.atomic-theme-white #home-featured::before,
+html.atomic-theme-white #home-goal::before,
+html.atomic-theme-white #page-extra-sections::before,
+html.atomic-theme-white #end-section::before,
+html.atomic-theme-white #footer-section::before,
+html.atomic-theme-white #home-reel::after,
+html.atomic-theme-white #home-featured::after,
+html.atomic-theme-white #home-goal::after,
+html.atomic-theme-white #page-extra-sections::after,
+html.atomic-theme-white #end-section::after,
+html.atomic-theme-white #footer-section::after {
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 html.atomic-theme-white #atomic-theme-toggle {
