@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>About Us | ATOMIC MEDIA.</title>
 <link rel="stylesheet" href="/_astro/about.CNa9RfUh.css?v=two-theme-base-1" />
-<link rel="stylesheet" href="/assets/public-feature-modules.css?v=targeted-fix-1" />
+<link rel="stylesheet" href="/assets/public-feature-modules.css?v=targeted-fix-2" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/meta/favicon-32x32.png?v=atomic-logo-1" />
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/meta/apple-touch-icon.png?v=atomic-logo-1" />
 <link rel="manifest" href="/assets/meta/site.webmanifest?v=atomic-logo-1" />
@@ -171,7 +171,19 @@
     color: #fff !important;
     font-family: Outfit, Inter, Arial, Helvetica, sans-serif !important;
   }
-  body::before { content: none !important; display: none !important; }
+  body::before {
+    content: "" !important;
+    position: fixed !important;
+    z-index: 0 !important;
+    left: -9vw !important;
+    top: 29vh !important;
+    width: 58vw !important;
+    height: 8vw !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg, rgba(209, 82, 0, .98), rgba(171, 65, 0, .92), transparent 74%) !important;
+    transform: rotate(15deg) !important;
+    filter: blur(.2px) !important;
+  }
   body > * { position: relative; z-index: 1; }
   .bg-background, .bg-surface-container-low, .bg-surface-dim { background: transparent !important; }
   .text-on-surface, .text-on-background, h1, h2, h3, h4 { color: #fff !important; letter-spacing: -0.035em; }
@@ -812,5 +824,5 @@
             });
         });
     </script>
-<script src="/assets/atomic-theme-toggle.js?v=targeted-fix-1" defer></script>
+<script src="/assets/atomic-theme-toggle.js?v=targeted-fix-2" defer></script>
 </body></html>
