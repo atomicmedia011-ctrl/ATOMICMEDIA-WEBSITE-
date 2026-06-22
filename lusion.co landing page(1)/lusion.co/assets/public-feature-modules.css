@@ -4018,24 +4018,10 @@ html.atomic-theme-white #atomic-theme-toggle span[aria-current="true"] {
   color: #111 !important;
 }
 
-/* Remove the orange menu-open page wash */
+/* Only remove the orange menu-open wash. Keep the site's original backgrounds. */
 html.atomic-menu-open body::after {
   content: none !important;
   display: none !important;
   background: transparent !important;
   opacity: 0 !important;
-}
-
-#header-menu.--opened {
-  background: rgba(255, 255, 255, 0.88) !important;
-  color: #111 !important;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12) !important;
-  backdrop-filter: blur(18px) saturate(1.05) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(1.05) !important;
-}
-
-#header-menu.--opened .header-menu-link-text,
-#header-menu.--opened .header-menu-link-text-clone {
-  color: #111 !important;
-  -webkit-text-fill-color: #111 !important;
 }
