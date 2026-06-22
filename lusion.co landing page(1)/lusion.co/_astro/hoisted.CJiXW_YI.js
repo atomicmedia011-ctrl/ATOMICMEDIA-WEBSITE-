@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright 2010-2023 Three.js Authors
  * SPDX-License-Identifier: MIT
@@ -21101,7 +21101,7 @@ function getVimeoUrl() {
     if (!r) throw new Error("An id or url must be passed, either in an options object or as a data-vimeo-id or data-vimeo-url attribute.");
     if (isInteger(r)) return `https://vimeo.com/${r}`;
     if (isVimeoUrl(r)) return r.replace("http:", "https:");
-    throw e ? new TypeError(`â€œ${e}â€ is not a valid video id.`) : new TypeError(`â€œ${r}â€ is not a vimeo.com url.`)
+    throw e ? new TypeError(`“${e}” is not a valid video id.`) : new TypeError(`“${r}” is not a vimeo.com url.`)
 }
 const subscribe = function(o, e, t) {
     let r = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : "addEventListener",
@@ -21463,23 +21463,23 @@ function getOEmbedData(o) {
     let e = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {},
         t = arguments.length > 2 ? arguments[2] : void 0;
     return new Promise((r, n) => {
-        if (!isVimeoUrl(o)) throw new TypeError(`â€œ${o}â€ is not a vimeo.com url.`);
+        if (!isVimeoUrl(o)) throw new TypeError(`“${o}” is not a vimeo.com url.`);
         let l = `https://${getOembedDomain(o)}/api/oembed.json?url=${encodeURIComponent(o)}`;
         for (const u in e) e.hasOwnProperty(u) && (l += `&${u}=${encodeURIComponent(e[u])}`);
         const c = "XDomainRequest" in window ? new XDomainRequest : new XMLHttpRequest;
         c.open("GET", l, !0), c.onload = function() {
             if (c.status === 404) {
-                n(new Error(`â€œ${o}â€ was not found.`));
+                n(new Error(`“${o}” was not found.`));
                 return
             }
             if (c.status === 403) {
-                n(new Error(`â€œ${o}â€ is not embeddable.`));
+                n(new Error(`“${o}” is not embeddable.`));
                 return
             }
             try {
                 const u = JSON.parse(c.responseText);
                 if (u.domain_status_code === 403) {
-                    createEmbed(u, t), n(new Error(`â€œ${o}â€ is not embeddable.`));
+                    createEmbed(u, t), n(new Error(`“${o}” is not embeddable.`));
                     return
                 }
                 r(u)
@@ -21767,7 +21767,7 @@ class Player {
             const n = e.querySelector("iframe");
             n && (e = n)
         }
-        if (e.nodeName === "IFRAME" && !isVimeoUrl(e.getAttribute("src") || "")) throw new Error("The player element passed isnâ€™t a Vimeo embed.");
+        if (e.nodeName === "IFRAME" && !isVimeoUrl(e.getAttribute("src") || "")) throw new Error("The player element passed isn’t a Vimeo embed.");
         if (playerMap.has(e)) return playerMap.get(e);
         this._window = e.ownerDocument.defaultView, this.element = e, this.origin = "*";
         const r = new npo_src((n, a) => {
@@ -26564,7 +26564,7 @@ class HomePage extends Page {
                 let t = !0,
                     r = !1,
                     n = !1;
-                scrollManager.getDomRange(homeGoalSection.domContainer).screenRatio == 1 ? (properties.bgColor.setStyle(properties.blackColorHex), t = !1, r = !0) : (properties.bgColor.setStyle(properties.offWhiteColorHex), t = !0, r = !1), homeGoalSection.uiBgColorNeedsOverride && (n = !1, homeGoalSection.isUIBgBlack ? (t = !1, r = !0) : (t = !0, r = !1)), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.toggle("is-black-bg", r), document.documentElement.classList.toggle("is-white-bg", t), document.documentElement.classList.toggle("is-blue-bg", n)
+                scrollManager.getDomRange(homeGoalSection.domContainer).screenRatio == 1 ? (properties.bgColor.setStyle(properties.blackColorHex), t = !1, r = !0) : (properties.bgColor.setStyle(properties.offWhiteColorHex), t = !0, r = !1), homeGoalSection.uiBgColorNeedsOverride && (n = !1, homeGoalSection.isUIBgBlack ? (t = !1, r = !0) : (t = !0, r = !1)), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.remove("is-black-bg", "is-white-bg", "is-blue-bg")
             }
             this.updateAudio && homePageAudios.update(e)
         }
@@ -29942,7 +29942,7 @@ class AboutPage extends Page {
         if (pagesManager.scrollTargetPage == this) {
             properties.bgColor.setStyle(properties.blackColorHex);
             let a = scrollManager.getDomRange(aboutCapabilitySection.domContainer);
-            properties.bgColor.lerp(_c.setStyle("#B2B2B2"), math.fit(a.screenRatio, -1, -.5, 0, 1)), a.screenRatio > -.75 ? (n = !0, r = !1) : (n = !1, r = !0), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.toggle("is-black-bg", r), document.documentElement.classList.toggle("is-white-bg", t), document.documentElement.classList.toggle("is-blue-bg", n)
+            properties.bgColor.lerp(_c.setStyle("#B2B2B2"), math.fit(a.screenRatio, -1, -.5, 0, 1)), a.screenRatio > -.75 ? (n = !0, r = !1) : (n = !1, r = !0), footerSection.getDomRange().ratio > -.1 && (t = !0, r = !1, n = !1), document.documentElement.classList.remove("is-black-bg", "is-white-bg", "is-blue-bg")
         }
         aboutWhoSection.update(e), aboutClientSection.update(e), aboutAwardSection.update(e), aboutCapabilitySection.update(e), aboutPageAudios.update(r)
     }
@@ -30049,7 +30049,7 @@ class ProjectsPage extends Page {
                 let t = !0,
                     r = !1,
                     n = !1;
-                document.documentElement.classList.toggle("is-black-bg", r), document.documentElement.classList.toggle("is-white-bg", t), document.documentElement.classList.toggle("is-blue-bg", n)
+                document.documentElement.classList.remove("is-black-bg", "is-white-bg", "is-blue-bg")
             }
             projectsPageAudios.update(e)
         }

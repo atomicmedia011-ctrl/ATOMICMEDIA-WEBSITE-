@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: atomic-media-website
+    env: node
+    plan: starter
+    buildCommand: npm install && npm --prefix backend install && npm --prefix admin install && npm --prefix admin run build
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_NAME
+        value: Atomic Admin
+      - key: CORS_ORIGIN
+        sync: false
+      - key: PUBLIC_SITE_ORIGIN
+        sync: false
+      - key: API_ORIGIN
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

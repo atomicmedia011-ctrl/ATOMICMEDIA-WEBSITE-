@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <base href="/">
     <meta name="description" content="Atomic Media is a full-service digital marketing agency providing branding, website development, performance marketing, social media management, content creation, and business growth solutions.">
-    <link id="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="./assets/meta/apple-touch-icon.png">
-    <link id="icon32" rel="icon" type="image/png" sizes="32x32" href="./assets/meta/favicon-32x32.png" media="(prefers-color-scheme: light)">
-    <link id="icon32" rel="icon" type="image/png" sizes="32x32" href="./assets/meta/dark/favicon-32x32.png" media="(prefers-color-scheme: dark)">
-    <link id="icon64" rel="icon" type="image/png" sizes="16x16" href="./assets/meta/favicon-16x16.png" media="(prefers-color-scheme: light)">
-    <link id="icon64" rel="icon" type="image/png" sizes="16x16" href="./assets/meta/dark/favicon-16x16.png" media="(prefers-color-scheme: dark)">
-    <link href="./assets/meta/favicon.ico" rel="shortcut icon" media="(prefers-color-scheme: light)">
-    <link href="./assets/meta/dark/favicon.ico" rel="shortcut icon" media="(prefers-color-scheme: dark)">
-    <link id="manifest" rel="manifest" href="./assets/meta/site.webmanifest">
-    <link rel="mask-icon" href="./assets/meta/safari-pinned-tab.svg" color="#000000">
+    <link id="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="./assets/meta/apple-touch-icon.png?v=atomic-logo-1">
+    <link id="icon32" rel="icon" type="image/png" sizes="32x32" href="./assets/meta/favicon-32x32.png?v=atomic-logo-1" media="(prefers-color-scheme: light)">
+    <link id="icon32" rel="icon" type="image/png" sizes="32x32" href="./assets/meta/dark/favicon-32x32.png?v=atomic-logo-1" media="(prefers-color-scheme: dark)">
+    <link id="icon64" rel="icon" type="image/png" sizes="16x16" href="./assets/meta/favicon-16x16.png?v=atomic-logo-1" media="(prefers-color-scheme: light)">
+    <link id="icon64" rel="icon" type="image/png" sizes="16x16" href="./assets/meta/dark/favicon-16x16.png?v=atomic-logo-1" media="(prefers-color-scheme: dark)">
+    <link href="./assets/meta/favicon.ico?v=atomic-logo-1" rel="shortcut icon" media="(prefers-color-scheme: light)">
+    <link href="./assets/meta/dark/favicon.ico?v=atomic-logo-1" rel="shortcut icon" media="(prefers-color-scheme: dark)">
+    <link id="manifest" rel="manifest" href="./assets/meta/site.webmanifest?v=atomic-logo-1">
+    <link rel="mask-icon" href="./assets/meta/safari-pinned-tab.svg?v=atomic-logo-1" color="#000000">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <meta property="og:description" content="Atomic Media is a full-service digital marketing agency providing branding, website development, performance marketing, social media management, content creation, and business growth solutions.">
@@ -30,7 +30,7 @@
     <link rel="sitemap" href="/sitemap-index.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2XC5XK9QJ"></script>
     <script>
@@ -42,24 +42,67 @@
         gtag('js', new Date());
         gtag('config', 'G-W2XC5XK9QJ');
     </script>
-    <link rel="stylesheet" href="/_astro/about.CNa9RfUh.css?v=orange-card-2">
-    <script type="module" src="/_astro/hoisted.CJiXW_YI.js?v=orange-card-2"></script>
+    <link rel="stylesheet" href="/_astro/about.CNa9RfUh.css?v=two-theme-base-1">
+    <link rel="stylesheet" href="/assets/atomic-preloader.css?v=2">
+    <script>
+        (function () {
+            var root = document.documentElement;
+            var theme = "dark";
+            try {
+                localStorage.removeItem("atomic-media-theme");
+                localStorage.removeItem("atomic-media-theme-v2");
+                localStorage.removeItem("atomic-media-theme-v3");
+                localStorage.removeItem("atomic-media-theme-v4");
+            } catch (error) {}
+            root.classList.remove("is-white-bg", "is-black-bg", "is-blue-bg", "atomic-theme-white", "atomic-theme-dark");
+            root.classList.add(theme === "white" ? "atomic-theme-white" : "atomic-theme-dark");
+            root.style.colorScheme = theme === "white" ? "light" : "dark";
+
+            var nativePlay = window.HTMLMediaElement && window.HTMLMediaElement.prototype.play;
+            if (!nativePlay || nativePlay.__atomicSafePlay) return;
+            window.HTMLMediaElement.prototype.play = function () {
+                var result = nativePlay.apply(this, arguments);
+                if (result && typeof result.catch === "function") {
+                    return result.catch(function (error) {
+                        if (error && (error.name === "NotSupportedError" || /supported sources/i.test(error.message || ""))) return;
+                        throw error;
+                    });
+                }
+                return result;
+            };
+            window.HTMLMediaElement.prototype.play.__atomicSafePlay = true;
+            function isUnsupportedMediaError(error) {
+                return !!(error && (error.name === "NotSupportedError" || /supported sources/i.test(error.message || String(error))));
+            }
+            window.addEventListener("error", function (event) {
+                if (isUnsupportedMediaError(event.error) || /supported sources/i.test(event.message || "")) {
+                    event.preventDefault();
+                }
+            }, true);
+            window.addEventListener("unhandledrejection", function (event) {
+                if (isUnsupportedMediaError(event.reason)) {
+                    event.preventDefault();
+                }
+            });
+        })();
+    </script>
+    <script type="module" src="/_astro/hoisted.CJiXW_YI.js?v=two-theme-runtime-1"></script>
 </head>
 
 <body> <canvas id="canvas"></canvas>
     <div id="ui">
         <header id="header">
             <div id="header-container">
-                <div id="header-background"></div> <a id="header-logo" aria-label="Go to home page" href="/"> <svg xmlns="http://www.w3.org/2000/svg" width="154" height="24" fill="none" viewBox="0 0 154 24"><g fill="currentColor" style="mix-blend-mode:exclusion"><text x="0" y="18" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" letter-spacing="1.2">ATOMIC MEDIA</text></g></svg> </a>
+                <div id="header-background"></div> <a id="header-logo" class="atomic-header-brand" aria-label="ATOMIC MEDIA. home" href="/"><img class="atomic-header-brand-mark" src="/assets/images/atomic-media-logo-mark.png" alt="ATOMIC MEDIA. logo"><span class="atomic-header-wordmark">ATOMIC MEDIA<span class="atomic-dot">.</span></span></a>
                 <div id="header-center"> <button id="header-center-project-back-btn" aria-label="Back"> <svg id="header-center-project-back-btn-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 12.243 3.757 8m0 0L8 3.757M3.757 8h8.486"></path></svg> <p id="header-center-project-back-btn-text">back</p> <svg id="header-center-project-back-btn-svg2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 12.243 3.757 8m0 0L8 3.757M3.757 8h8.486"></path></svg> <div id="project-details-header-back-background"></div> </button>                    </div>
-                <div id="header-right"> <button id="header-right-sound-btn"><canvas></canvas></button> <button id="header-right-talk-btn-placeholder"></button> <button id="header-right-talk-btn"> <a href="mailto:hello@atomicmedia.in"></a> <div id="header-right-talk-container"> <span id="header-right-talk-btn-arrow"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.343 8h11.314m0 0-4.984 4.984M13.657 8 8.673 3.016"></path></svg> </span> <span id="header-right-talk-btn-text">Let's talk</span> <span id="header-right-talk-btn-dots"> <span class="header-right-talk-btn-dot"></span> </span> </div> </button>                    <button id="header-right-menu-btn" aria-label="Menu button"> <div id="header-right-menu-btn-inner"> <span id="header-right-menu-btn-text">Menu</span> <span id="header-right-menu-btn-text-close">Close</span> <div id="header-right-menu-btn-dots"> <span class="header-right-menu-btn-dot"></span> <span class="header-right-menu-btn-dot"></span> </div> </div> </button>                    </div>
+                <div id="header-right"> <button id="header-right-sound-btn"><canvas></canvas></button> <button id="header-right-talk-btn-placeholder"></button> <button id="header-right-talk-btn"> <a href="mailto:info@atomicmedia.in"></a> <div id="header-right-talk-container"> <span id="header-right-talk-btn-arrow"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.343 8h11.314m0 0-4.984 4.984M13.657 8 8.673 3.016"></path></svg> </span> <span id="header-right-talk-btn-text">Let's talk</span> <span id="header-right-talk-btn-dots"> <span class="header-right-talk-btn-dot"></span> </span> </div> </button>                    <button id="header-right-menu-btn" aria-label="Menu button"> <div id="header-right-menu-btn-inner"> <span id="header-right-menu-btn-text">Menu</span> <span id="header-right-menu-btn-text-close">Close</span> <div id="header-right-menu-btn-dots"> <span class="header-right-menu-btn-dot"></span> <span class="header-right-menu-btn-dot"></span> </div> </div> </button>                    </div>
                 <div id="header-menu">
                     <div id="header-menu-links">
                         <a class="header-menu-link" data-page="home" href="/">
                             <div class="header-menu-link-background"></div>
                             <div class="header-menu-link-inner"> <span class="header-menu-link-text">Home</span> <span class="header-menu-link-text-clone">Home</span> <svg class="header-menu-link-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.515 12h16.97m0 0L13.01 4.525M20.485 12l-7.475 7.476"></path></svg>                                </div>
                         </a>
-                        <a class="header-menu-link" data-page="about" href="/about">
+                        <a class="header-menu-link" data-page="about" data-link-type="external" href="/about">
                             <div class="header-menu-link-background"></div>
                             <div class="header-menu-link-inner"> <span class="header-menu-link-text">About us</span> <span class="header-menu-link-text-clone">About us</span> <svg class="header-menu-link-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.515 12h16.97m0 0L13.01 4.525M20.485 12l-7.475 7.476"></path></svg>                                </div>
                         </a>
@@ -77,7 +120,7 @@
                             <form id="header-menu-newsletter-form"> <input id="header-menu-newsletter-input-field" type="email" name="EMAIL" autocomplete="email" placeholder="Your email"> <button type="submit" id="header-menu-newsletter-input-arrow"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M4.11 12.75a.75.75 0 0 1 0-1.5h13.978l-5.036-5.036a.75.75 0 1 1 1.06-1.06l6.316 6.315.53.53-.53.53-6.316 6.317a.75.75 0 0 1-1.06-1.061l5.035-5.035H4.109Z" clip-rule="evenodd"></path></svg> </button>                                </form>
                             <div id="header-menu-newsletter-feedback-message"></div>
                         </div>
-                    </div> <button id="header-menu-talk"> <a href="mailto:hello@atomicmedia.in"></a> <div id="header-menu-text">Let's talk</div> <svg id="header-menu-talk-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path fill="#fff" d="M0 0h24v24H0z"></path> <rect width="18" height="18" x="3" y="3" stroke="#000" stroke-width="1.5" rx="2"></rect> <rect width="12" height="4" x="6" y="14" fill="#000" rx="2"></rect> <path stroke="#000" stroke-linecap="round" stroke-width="1.5" d="M7 7h10M7 10h10"></path> </svg> </button>
+                    </div> <button id="header-menu-talk"> <a href="mailto:info@atomicmedia.in"></a> <div id="header-menu-text">Let's talk</div> <svg id="header-menu-talk-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path fill="#fff" d="M0 0h24v24H0z"></path> <rect width="18" height="18" x="3" y="3" stroke="#000" stroke-width="1.5" rx="2"></rect> <rect width="12" height="4" x="6" y="14" fill="#000" rx="2"></rect> <path stroke="#000" stroke-linecap="round" stroke-width="1.5" d="M7 7h10M7 10h10"></path> </svg> </button>
                     <a id="header-menu-labs" target="_blank" href="/projects">
                         <div id="header-menu-labs-inner">
                             <div id="header-menu-labs-lucy"> <svg id="header-menu-labs-lucy-svg" xmlns="http://www.w3.org/2000/svg" width="28" height="38" fill="none" viewBox="0 0 28 38"> <path stroke="#fff" stroke-width="5" d="M20.128 29.65C18.584 31.217 16.532 32 13.972 32c-2.56 0-4.612-.783-6.156-2.35C6.272 28.05 5.5 26 5.5 23.5c0-2.5.772-4.533 2.316-6.1 1.544-1.6 3.596-2.4 6.156-2.4 2.56 0 4.612.8 6.156 2.4C21.71 18.967 22.5 21 22.5 23.5c0 2.5-.79 4.55-2.372 6.15Z"></path> <path fill="#fff" d="M23.5 4.25a3.25 3.25 0 1 0-6.5 0 3.25 3.25 0 0 0 6.5 0ZM11 4.25a3.25 3.25 0 1 0-6.5 0 3.25 3.25 0 0 0 6.5 0Z"></path> </svg>                                </div>
@@ -92,62 +135,10 @@
         <div id="page-container">
             <div id="page-container-inner">
                 <div id="home" class="page">
-                    <div id="home-hero" class="section">
-                        <h1 id="home-hero-title">Grow Faster With Atomic Media</h1>
-                        <div id="home-hero-visual-container">
-                            <div id="home-hero-atomic-visual">
-                                <!-- Interactive Particle Canvas -->
-                                <canvas id="atomic-hero-particles"></canvas>
-
-                                <!-- Left Side Dashboard Copy Block -->
-                                <div class="hero-dashboard-copy">
-                                    <span class="hero-dashboard-kicker">ATOMIC MEDIA</span>
-                                    <h2 class="hero-dashboard-heading">Digital Growth Engine<br>For Modern Brands</h2>
-                                    <p class="hero-dashboard-desc">We create high-performing websites, digital products, and marketing campaigns that accelerate growth.</p>
-                                    <div class="hero-dashboard-actions">
-                                        <a class="hero-action-btn primary" href="mailto:hello@atomicmedia.in">Get Started</a>
-                                        <a class="hero-action-btn secondary" href="/projects">Book Strategy Call</a>
-                                    </div>
-                                </div>
-
-                                <!-- Floating Brand Badge in Center -->
-                                <div class="hero-center-logo-badge">
-                                    <div class="hero-center-logo-circle">
-                                        <div class="hero-logo-mark-wrapper">
-                                            <img src="/assets/images/atomic-media-logo-mark.png" alt="Atomic Media Logo Mark" class="hero-logo-mark-img">
-                                        </div>
-                                        <span class="hero-logo-badge-text">ATOMIC MEDIA</span>
-                                    </div>
-                                </div>
-
-                                <!-- Floating Capability Pills -->
-                                <div class="hero-floating-pill pill-brand">Brand Systems</div>
-                                <div class="hero-floating-pill pill-web">Web Experiences</div>
-                                <div class="hero-floating-pill pill-ads">Performance Ads</div>
-
-                                <!-- Right Side Glassmorphism Stats Cards -->
-                                <div class="hero-stats-container">
-                                    <div class="hero-stats-card card-projects">
-                                        <div class="hero-stats-number-row">
-                                            <span class="hero-stats-number" data-atomic-counter="100">0</span><span class="hero-stats-suffix">+</span>
-                                        </div>
-                                        <span class="hero-stats-label">Projects Delivered</span>
-                                    </div>
-                                    <div class="hero-stats-card card-reach">
-                                        <div class="hero-stats-number-row">
-                                            <span class="hero-stats-number" data-atomic-counter="5">0</span><span class="hero-stats-suffix">M+</span>
-                                        </div>
-                                        <span class="hero-stats-label">Campaign Reach</span>
-                                    </div>
-                                </div>
-
-                                <div class="hero-frame-stage">
-                                    <img class="hero-frame-fallback" src="/assets/hero/atomic-media-hero.png" alt="Atomic Media hero visual">
-                                    <div class="hero-frame-vignette" aria-hidden="true"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="home-hero-scroll-container">
+                    <div id="home-hero" class="section atomic-hero-removed" aria-hidden="true">
+                        <div id="home-hero-visual-container" aria-hidden="true"></div>
+                        <h1 id="home-hero-title" aria-hidden="true">Step Into the Future</h1>
+                        <div id="home-hero-scroll-container" aria-hidden="true">
                             <div id="home-hero-scroll-container-crosses">
                                 <div class="home-hero-scroll-container-cross"></div>
                                 <div class="home-hero-scroll-container-cross"></div>
@@ -492,10 +483,10 @@
                                     <div class="end-section-content-cross"></div>
                                 </div>
                                 <div id="end-section-subtitle">
-                                    <div id="end-section-subtitle-text">Is Your Big Idea Ready to Go Wild?</div>
+                                    <div id="end-section-subtitle-text">Ready to grow your brand?</div>
                                 </div>
                                 <div id="end-section-title">
-                                    <div id="end-section-title-link">Let's work <br> together!</div> <span id="end-section-title-top-decoration"></span> <span id="end-section-title-bottom-left-decoration"></span> <span id="end-section-title-bottom-right-decoration"></span> </div>
+                                    <div id="end-section-title-link">Contact us <br> today!</div> <span id="end-section-title-top-decoration"></span> <span id="end-section-title-bottom-left-decoration"></span> <span id="end-section-title-bottom-right-decoration"></span> </div>
                             </div>
                             <div id="end-bottom">
                                 <div class="end-bottom-arrow-container">
@@ -519,17 +510,16 @@
                     <div id="footer-top"></div>
                     <div id="footer-middle">
                         <div id="footer-middle-contact">
-                            <a id="footer-contact-address" href="https://goo.gl/maps/x9evc1NxZocjrM947" target="_blank">
-                                <div class="footer-address-line">ATOMIC MEDIA</div>
-                                <div class="footer-address-line">Digital Marketing & Creative Growth Agency</div>
-                                <div class="footer-address-line">Serving brands globally</div>
-                                <div class="footer-address-line">Book a free consultation</div>
+                            <a id="footer-contact-address" href="mailto:info@atomicmedia.in">
+                                <div class="footer-brand-title">ATOMIC MEDIA<span class="atomic-dot">.</span></div>
+                                <div class="footer-brand-copy">Digital Marketing & Creative Growth Agency serving ambitious brands globally.</div>
+                                <div class="footer-brand-cta">Book a free consultation</div>
                             </a>
-                            <div id="footer-contact-socials"> <a class="footer-socials-line" href="https://x.com/atomicmedia" target="_blank"> <svg class="footer-socials-line-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M6.948 18.113a.75.75 0 0 1-1.06-1.06l9.885-9.886H8.65a.75.75 0 1 1 0-1.5h9.682v9.682a.75.75 0 0 1-1.5 0v-7.12l-9.884 9.884Z" clip-rule="evenodd"></path></svg> <span class="footer-socials-text">Twitter / X</span> </a>                                <a class="footer-socials-line" href="https://www.instagram.com/atomicmedia" target="_blank"> <svg class="footer-socials-line-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M6.948 18.113a.75.75 0 0 1-1.06-1.06l9.885-9.886H8.65a.75.75 0 1 1 0-1.5h9.682v9.682a.75.75 0 0 1-1.5 0v-7.12l-9.884 9.884Z" clip-rule="evenodd"></path></svg> <span class="footer-socials-text">Instagram</span> </a>                                <a class="footer-socials-line" href="https://www.linkedin.com/company/atomic-media" target="_blank"> <svg class="footer-socials-line-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M6.948 18.113a.75.75 0 0 1-1.06-1.06l9.885-9.886H8.65a.75.75 0 1 1 0-1.5h9.682v9.682a.75.75 0 0 1-1.5 0v-7.12l-9.884 9.884Z" clip-rule="evenodd"></path></svg> <span class="footer-socials-text">Linkedin</span> </a>                                </div>
+                            <div id="footer-contact-socials"> <a class="footer-socials-line" href="mailto:info@atomicmedia.in" target="_blank"> <svg class="footer-socials-line-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M6.948 18.113a.75.75 0 0 1-1.06-1.06l9.885-9.886H8.65a.75.75 0 1 1 0-1.5h9.682v9.682a.75.75 0 0 1-1.5 0v-7.12l-9.884 9.884Z" clip-rule="evenodd"></path></svg> <span class="footer-socials-text">Email</span> </a>                                <a class="footer-socials-line" href="https://www.instagram.com/atomic.media.in?igsh=MWFrbGh3a3ppbnMwaQ==" target="_blank"> <svg class="footer-socials-line-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M6.948 18.113a.75.75 0 0 1-1.06-1.06l9.885-9.886H8.65a.75.75 0 1 1 0-1.5h9.682v9.682a.75.75 0 0 1-1.5 0v-7.12l-9.884 9.884Z" clip-rule="evenodd"></path></svg> <span class="footer-socials-text">Instagram</span> </a>                                <a class="footer-socials-line" href="https://www.linkedin.com/company/atomic-mediaa/" target="_blank"> <svg class="footer-socials-line-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M6.948 18.113a.75.75 0 0 1-1.06-1.06l9.885-9.886H8.65a.75.75 0 1 1 0-1.5h9.682v9.682a.75.75 0 0 1-1.5 0v-7.12l-9.884 9.884Z" clip-rule="evenodd"></path></svg> <span class="footer-socials-text">LinkedIn</span> </a>                                </div>
                             <div id="footer-contact-enquires">
-                                <div id="footer-enquires-header">General enquires</div> <a id="footer-enquires-link" href="mailto:hello@atomicmedia.in">hello@atomicmedia.in</a> </div>
+                                <div id="footer-enquires-header">General enquiries</div> <a id="footer-enquires-link" href="mailto:info@atomicmedia.in">info@atomicmedia.in</a> </div>
                             <div id="footer-contact-business">
-                                <div id="footer-business-header">New business</div> <a id="footer-business-link" href="mailto:growth@atomicmedia.in">growth@atomicmedia.in</a> </div>
+                                <div id="footer-business-header">New business</div> <a id="footer-business-link" href="mailto:info@atomicmedia.in">info@atomicmedia.in</a> </div>
                         </div>
                         <div id="footer-middle-newsletter">
                             <div id="footer-newsletter-header"> <span class="footer-newsletter-line">Subscribe to</span> <span class="footer-newsletter-line">our newsletter</span> </div>
@@ -541,7 +531,7 @@
                         </div>
                     </div>
                     <div id="footer-bottom">
-                        <div id="footer-bottom-copyright">©2026 ATOMIC MEDIA</div> <a id="footer-bottom-labs" href="/projects"> Case Studies</a>
+                        <div id="footer-bottom-copyright">&copy;2026 ATOMIC MEDIA<span class="atomic-dot">.</span></div> <a id="footer-bottom-labs" href="/projects"> Case Studies</a>
                         <div id="footer-bottom-tagline">Transforming Brands Into Digital Powerhouses</div>
                         <div id="footer-bottom-up"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#fff" fill-rule="evenodd" d="M12 22a1 1 0 0 1-1-1V5.857l-6.223 6.224a1 1 0 0 1-1.415-1.415l7.9-7.9a1 1 0 0 1 1.414 0v.001l7.9 7.9a1 1 0 0 1-1.414 1.414L13 5.919V21a1 1 0 0 1-1 1Z" clip-rule="evenodd"></path></svg>                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#fff" fill-rule="evenodd" d="M12 22a1 1 0 0 1-1-1V5.857l-6.223 6.224a1 1 0 0 1-1.415-1.415l7.9-7.9a1 1 0 0 1 1.414 0v.001l7.9 7.9a1 1 0 0 1-1.414 1.414L13 5.919V21a1 1 0 0 1-1 1Z" clip-rule="evenodd"></path></svg>                            </div>
                     </div>
@@ -585,22 +575,38 @@
             </div> <button id="video-overlay__mute-btn">MUTE</button> </div>
         <div id="video-overlay-cursor"> <svg id="video-overlay-cursor-svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 36 36"><path stroke="#020022" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M31 31 17.928 18 31 5M5 5l13.072 13L5 31"></path></svg>            </div>
     </div> <canvas id="transition-overlay"></canvas>
-    <div id="preloader">
-        <div id="preloader-percent-digits">
-            <div class="preloader-percent-digit">
-                <div class="preloader-percent-digit-num">0</div>
-                <div class="preloader-percent-digit-num">0</div>
+    <div id="preloader" class="atomic-preloader" aria-label="Loading Atomic Media">
+        <div class="atomic-preloader__grain" aria-hidden="true">
+            <canvas id="atomic-preloader-grain"></canvas>
+        </div>
+        <div class="atomic-preloader__stage">
+            <div class="atomic-preloader__ring" aria-hidden="true"></div>
+            <div class="atomic-preloader__logo-wrap">
+                <div class="atomic-preloader__glow" aria-hidden="true"></div>
+                <div class="atomic-preloader__logo">
+                    <img alt="ATOMIC MEDIA. logo" src="/assets/images/atomic-media-logo-mark.png">
+                    <div class="atomic-preloader__sweep" aria-hidden="true"></div>
+                </div>
             </div>
-            <div class="preloader-percent-digit">
-                <div class="preloader-percent-digit-num">0</div>
-                <div class="preloader-percent-digit-num">0</div>
-            </div>
-            <div class="preloader-percent-digit">
-                <div class="preloader-percent-digit-num">0</div>
-                <div class="preloader-percent-digit-num">0</div>
+            <div id="preloader-percent-digits" aria-live="polite">
+                <span class="atomic-preloader__percent-label">Loading&nbsp;</span>
+                <div class="preloader-percent-digit">
+                    <div class="preloader-percent-digit-num">0</div>
+                    <div class="preloader-percent-digit-num">0</div>
+                </div>
+                <div class="preloader-percent-digit">
+                    <div class="preloader-percent-digit-num">0</div>
+                    <div class="preloader-percent-digit-num">0</div>
+                </div>
+                <div class="preloader-percent-digit">
+                    <div class="preloader-percent-digit-num">0</div>
+                    <div class="preloader-percent-digit-num">0</div>
+                </div>
+                <span class="atomic-preloader__percent-symbol">%</span>
             </div>
         </div>
     </div>
-<link rel="stylesheet" href="/assets/public-feature-modules.css"><script src="/assets/vendor/gsap.min.js?v=scroll-frames-2" defer></script><script src="/assets/vendor/ScrollTrigger.min.js?v=scroll-frames-2" defer></script><script src="/assets/hero-frame-animation.js?v=scroll-frames-2" defer></script><script src="/assets/atomic-hero-visual.js" defer></script><script src="/assets/cms-bridge.js" defer></script><script src="/assets/public-feature-modules.js" defer></script><script src="/assets/project-card-links.js?v=2" defer></script></body>
+
+<link rel="stylesheet" href="/assets/public-feature-modules.css?v=two-theme-only-5"><script src="/assets/vendor/gsap.min.js?v=scroll-frames-2" defer></script><script src="/assets/vendor/ScrollTrigger.min.js?v=scroll-frames-2" defer></script><script src="/assets/hero-frame-animation.js?v=scroll-frames-2" defer></script><script src="/assets/atomic-hero-visual.js" defer></script><script src="/assets/cms-bridge.js" defer></script><script src="/assets/public-feature-modules.js" defer></script><script src="/assets/project-card-links.js?v=2" defer></script><script src="/assets/atomic-theme-toggle.js?v=two-theme-only-5" defer></script><script src="/assets/atomic-preloader.js?v=2" defer></script></body>
 
 </html>

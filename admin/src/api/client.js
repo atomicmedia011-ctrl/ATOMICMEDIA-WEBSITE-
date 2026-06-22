@@ -1,6 +1,7 @@
 const API_BASE = import.meta.env.VITE_API_BASE || "";
-const SITE_ORIGIN = import.meta.env.VITE_SITE_ORIGIN || "http://localhost:4173";
-const API_ORIGIN = import.meta.env.VITE_API_ORIGIN || "http://localhost:5000";
+const BROWSER_ORIGIN = typeof window !== "undefined" ? window.location.origin : "";
+const SITE_ORIGIN = import.meta.env.VITE_SITE_ORIGIN || BROWSER_ORIGIN || "http://localhost:4173";
+const API_ORIGIN = import.meta.env.VITE_API_ORIGIN || BROWSER_ORIGIN || "http://localhost:5000";
 
 export function getToken() {
   return localStorage.getItem("cms_token");

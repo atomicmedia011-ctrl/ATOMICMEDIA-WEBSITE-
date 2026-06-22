@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("./config/env");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
-const { configureCloudinary } = require("./config/cloudinary");
+const { configureCloudinary, hasCloudinaryConfig } = require("./config/cloudinary");
 
 const authRoutes = require("./routes/authRoutes");
 const publicRoutes = require("./routes/publicRoutes");
@@ -18,6 +18,7 @@ const communicationRoutes = require("./routes/communicationRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const otpRoutes = require("./routes/otpRoutes");
 const chatbotRoutes = require("./routes/chatbotRoutes");
+const publicSiteRoutes = require("./routes/publicSiteRoutes");
 
 configureCloudinary();
 
@@ -35,7 +36,12 @@ app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.use(morgan("dev"));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, limit: 1000 }));
 
-app.get("/api/health", (req, res) => res.json({ ok: true, service: "atomic-media-cms" }));
+app.get("/api/health", (req, res) => res.json({
+  ok: true,
+  service: "atomic-media-cms",
+  cloudinary: hasCloudinaryConfig() ? "configured" : "missing",
+  mongo: process.env.MONGO_URI ? "configured" : "missing"
+}));
 app.use("/api/auth", authRoutes);
 app.use("/api/public", publicRoutes);
 app.use("/api/public/otp", otpRoutes);
@@ -56,6 +62,7 @@ app.get("/admin/*", (req, res, next) => {
     if (err) next();
   });
 });
+app.use(publicSiteRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });

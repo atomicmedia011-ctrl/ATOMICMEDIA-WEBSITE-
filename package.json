@@ -8,6 +8,8 @@
     "backend": "npm --prefix backend run dev",
     "admin": "npm --prefix admin run dev",
     "dev": "npm run backend",
+    "build": "npm --prefix admin run build",
+    "start": "npm --prefix backend start",
     "seed": "npm --prefix backend run seed"
   },
   "workspaces": [

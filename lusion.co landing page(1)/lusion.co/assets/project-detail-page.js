@@ -29,10 +29,10 @@
     document.title = `${project.title} | Atomic Media`;
     root.innerHTML = `
       <header class="project-header">
-        <a href="/" class="brand">ATOMIC MEDIA</a>
+        <a href="/" class="brand">ATOMIC MEDIA<span class="atomic-dot">.</span></a>
         <nav>
           <a href="/projects">All Projects</a>
-          <a href="mailto:hello@atomicmedia.in">Let's Talk</a>
+          <a href="mailto:info@atomicmedia.in">Let's Talk</a>
         </nav>
       </header>
       <main>
@@ -89,7 +89,7 @@
   } catch (error) {
     root.innerHTML = `
       <main class="error-state">
-        <a href="/projects" class="brand">ATOMIC MEDIA</a>
+        <a href="/projects" class="brand">ATOMIC MEDIA<span class="atomic-dot">.</span></a>
         <h1>Project Not Found</h1>
         <p>This project page could not load from the CMS.</p>
         <a href="/projects">Back to Projects</a>

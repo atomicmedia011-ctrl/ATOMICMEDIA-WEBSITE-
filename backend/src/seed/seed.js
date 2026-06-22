@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("../config/env");
 const fs = require("fs");
 const path = require("path");
 const connectDB = require("../config/db");
@@ -40,7 +40,15 @@ async function seedExistingProjectAssets(userId) {
     const title = titleFromSlug(slug);
     const coverImage = projectImage(slug, "home.webp");
     const images = [coverImage];
-    if (fs.existsSync(depthPath)) images.push(projectImage(slug, "home_depth.webp"));
+    if (fs.existsSync(depthPath)) {
+      images.push(projectImage(slug, "home_depth.webp"));
+    }
+    
+    // Add additional mock photos from other project directories to build a full gallery card grid
+    const nextFolders = folders.slice(index + 1, index + 4);
+    nextFolders.forEach((nextFolder) => {
+      images.push(projectImage(nextFolder.name, "home.webp"));
+    });
 
     await MediaAsset.updateOne(
       { provider: "local", publicId: coverImage.publicId },
@@ -72,7 +80,10 @@ async function seedExistingProjectAssets(userId) {
         enabled: true,
         order: index,
         coverImage,
-        images
+        images,
+        videos: [
+          { url: "/assets/videos/about-hero.mp4", type: "video", alt: `${title} Showcase Video` }
+        ]
       },
       { upsert: true }
     );

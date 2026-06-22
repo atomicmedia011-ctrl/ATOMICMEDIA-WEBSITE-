@@ -1,7 +1,15 @@
 const { v2: cloudinary } = require("cloudinary");
 
+function hasCloudinaryConfig() {
+  return Boolean(
+    process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET
+  );
+}
+
 function configureCloudinary() {
-  if (!process.env.CLOUDINARY_CLOUD_NAME) {
+  if (!hasCloudinaryConfig()) {
     return null;
   }
 
@@ -15,4 +23,4 @@ function configureCloudinary() {
   return cloudinary;
 }
 
-module.exports = { cloudinary, configureCloudinary };
+module.exports = { cloudinary, configureCloudinary, hasCloudinaryConfig };

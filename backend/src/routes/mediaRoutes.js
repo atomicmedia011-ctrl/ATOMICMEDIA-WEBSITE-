@@ -4,13 +4,14 @@ const path = require("path");
 const asyncHandler = require("../utils/asyncHandler");
 const upload = require("../middleware/upload");
 const { cloudinary } = require("../config/cloudinary");
+const { getSiteAssetRoot } = require("../config/sitePaths");
 const { protect, requirePermission } = require("../middleware/auth");
 const MediaAsset = require("../models/MediaAsset");
 
 const router = express.Router();
 const ROOT = path.join(__dirname, "..", "..", "..");
 const UPLOAD_ROOT = path.join(ROOT, "backend", "uploads");
-const SITE_ASSET_ROOT = path.join(ROOT, "lusion.co landing page(1)", "lusion.dev", "assets");
+const SITE_ASSET_ROOT = getSiteAssetRoot();
 
 function mediaTypeFromMime(mimeType = "") {
   if (mimeType.startsWith("video/")) return "video";
@@ -28,7 +29,7 @@ function mediaTypeFromExt(filePath) {
 }
 
 function walkAssets(dir, list = []) {
-  if (!fs.existsSync(dir)) return list;
+  if (!dir || !fs.existsSync(dir)) return list;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {

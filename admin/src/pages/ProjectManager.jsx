@@ -1,115 +1,131 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Check, Eye, Plus, RotateCcw, Save, Search, Trash2, Upload } from "lucide-react";
+import {
+  Check, ChevronRight, Eye, FolderOpen, Image as ImageIcon,
+  Info, Layers, Plus, RotateCcw, Save, Search, Settings2, Trash2, Upload
+} from "lucide-react";
 import { api, assetUrl } from "../api/client";
 import ConfirmModal from "../components/ConfirmModal";
 import MediaField from "../components/MediaField";
 import { useToast } from "../components/Toast";
 
+const TABS = [
+  { id: "info", label: "Info", icon: Info },
+  { id: "media", label: "Media", icon: ImageIcon },
+  { id: "seo", label: "SEO", icon: Layers },
+  { id: "advanced", label: "Advanced", icon: Settings2 },
+];
+
 const blankProject = {
-  title: "",
-  slug: "",
-  excerpt: "",
-  body: "",
-  client: "",
-  year: "",
-  liveUrl: "",
-  projectType: "",
-  eventType: "",
-  mediaFolder: "",
-  categories: [],
-  technologies: [],
-  featured: false,
-  enabled: true,
-  order: 0,
-  coverImage: null,
-  images: [],
-  videos: [],
-  reels: [],
-  detailSections: [],
-  seo: {}
+  title: "", slug: "", excerpt: "", body: "", client: "", year: "",
+  liveUrl: "", projectType: "", eventType: "", mediaFolder: "",
+  categories: [], technologies: [], featured: false, enabled: true,
+  order: 0, coverImage: null, images: [], videos: [], reels: [],
+  detailSections: [], seo: {}
 };
 
-function slugify(value) {
-  return String(value || "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+function slugify(v) {
+  return String(v || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
-function parseList(value) {
-  return Array.isArray(value) ? value : String(value || "").split(",").map((item) => item.trim()).filter(Boolean);
+function parseList(v) {
+  return Array.isArray(v) ? v : String(v || "").split(",").map(s => s.trim()).filter(Boolean);
 }
 
-function parseJson(value, fallback) {
-  if (typeof value !== "string") return value || fallback;
-  if (!value.trim()) return fallback;
-  try {
-    return JSON.parse(value);
-  } catch {
-    return fallback;
-  }
+function parseJson(v, fb) {
+  if (typeof v !== "string") return v || fb;
+  if (!v.trim()) return fb;
+  try { return JSON.parse(v); } catch { return fb; }
 }
 
-function primaryImage(project) {
-  return project?.coverImage?.url || project?.images?.[0]?.url || "";
-}
-
-function folderFromProject(project) {
-  const type = slugify(project.projectType || project.eventType || "general") || "general";
-  const slug = slugify(project.slug || project.title || "new-project") || "new-project";
+function folderFromProject(p) {
+  const type = slugify(p.projectType || p.eventType || "general") || "general";
+  const slug = slugify(p.slug || p.title || "new-project") || "new-project";
   return `projects/${type}/${slug}`;
+}
+
+function primaryImage(p) {
+  return p?.coverImage?.url || p?.images?.[0]?.url || "";
+}
+
+// Tag chip input
+function TagInput({ value = [], onChange, placeholder }) {
+  const [input, setInput] = useState("");
+  const tags = Array.isArray(value) ? value : String(value || "").split(",").map(s => s.trim()).filter(Boolean);
+
+  function add(tag) {
+    const t = tag.trim();
+    if (t && !tags.includes(t)) onChange([...tags, t]);
+    setInput("");
+  }
+
+  function remove(tag) { onChange(tags.filter(t => t !== tag)); }
+
+  return (
+    <div className="tag-input-wrap" onClick={e => e.currentTarget.querySelector("input")?.focus()}>
+      {tags.map(tag => (
+        <span key={tag} className="tag-chip">
+          {tag}
+          <button type="button" onClick={() => remove(tag)}>×</button>
+        </span>
+      ))}
+      <input
+        className="tag-input-inner"
+        value={input}
+        placeholder={tags.length ? "" : placeholder}
+        onChange={e => setInput(e.target.value)}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(input); }
+          if (e.key === "Backspace" && !input && tags.length) remove(tags[tags.length - 1]);
+        }}
+        onBlur={() => { if (input.trim()) add(input); }}
+      />
+    </div>
+  );
 }
 
 export default function ProjectManager() {
   const [projects, setProjects] = useState([]);
   const [active, setActive] = useState(blankProject);
+  const [tab, setTab] = useState("info");
   const [query, setQuery] = useState("");
   const [confirm, setConfirm] = useState(null);
   const [saving, setSaving] = useState(false);
   const notify = useToast();
 
   async function load() {
-    const result = await api("/api/admin/projects?limit=100");
-    const nextProjects = result.items || [];
-    setProjects(nextProjects);
-    setActive((current) => {
-      const currentInProjects = current?._id ? nextProjects.find((item) => item._id === current._id) : null;
-      return currentInProjects || nextProjects[0] || blankProject;
+    const r = await api("/api/admin/projects?limit=200");
+    const list = r.items || [];
+    setProjects(list);
+    setActive(cur => {
+      const found = cur?._id ? list.find(p => p._id === cur._id) : null;
+      return found || list[0] || blankProject;
     });
   }
 
-  useEffect(() => {
-    load().catch((error) => notify(error.message, "error"));
-  }, []);
+  useEffect(() => { load().catch(e => notify(e.message, "error")); }, []);
 
-  const filteredProjects = useMemo(() => {
-    const needle = query.toLowerCase();
-    return projects.filter((project) => {
-      return `${project.title} ${project.slug} ${(project.categories || []).join(" ")}`.toLowerCase().includes(needle);
-    });
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase();
+    return projects.filter(p =>
+      `${p.title} ${p.slug} ${(p.categories || []).join(" ")}`.toLowerCase().includes(q)
+    );
   }, [projects, query]);
 
   function updateField(field, value) {
-    setActive((current) => {
-      const next = { ...current, [field]: value };
-      if (field === "title" && !current._id && !current.slug) {
-        next.slug = slugify(value);
-      }
-      if (["title", "slug", "projectType", "eventType"].includes(field) && !current.mediaFolder) {
+    setActive(cur => {
+      const next = { ...cur, [field]: value };
+      if (field === "title" && !cur._id && !cur.slug) next.slug = slugify(value);
+      if (["title", "slug", "projectType", "eventType"].includes(field) && !cur.mediaFolder)
         next.mediaFolder = folderFromProject(next);
-      }
       return next;
     });
   }
 
-  function payload() {
+  function buildPayload() {
     const slug = active.slug || slugify(active.title);
     const mediaFolder = active.mediaFolder || folderFromProject({ ...active, slug });
     return {
-      ...active,
-      slug,
-      mediaFolder,
+      ...active, slug, mediaFolder,
       categories: parseList(active.categories),
       technologies: parseList(active.technologies),
       order: Number(active.order || 0),
@@ -118,32 +134,28 @@ export default function ProjectManager() {
     };
   }
 
-  async function saveProject() {
+  async function save() {
+    if (!active.title?.trim()) { notify("Title is required", "error"); return; }
     setSaving(true);
     try {
-      const body = payload();
+      const body = buildPayload();
       const method = body._id ? "PATCH" : "POST";
       const path = body._id ? `/api/admin/projects/${body._id}` : "/api/admin/projects";
       const saved = await api(path, { method, body });
-      notify(body._id ? "Project updated" : "Project created");
+      notify(body._id ? "Project updated ✓" : "Project created ✓");
       setActive(saved);
       await load();
-    } catch (error) {
-      notify(error.message, "error");
-    } finally {
-      setSaving(false);
-    }
+    } catch (e) { notify(e.message, "error"); }
+    finally { setSaving(false); }
   }
 
-  async function duplicateProject() {
+  async function duplicate() {
     const copy = {
-      ...payload(),
-      _id: undefined,
+      ...buildPayload(), _id: undefined,
       title: `${active.title} Copy`,
       slug: `${active.slug || slugify(active.title)}-copy`,
       mediaFolder: `${active.mediaFolder || folderFromProject(active)}-copy`,
-      featured: false,
-      order: Number(active.order || 0) + 1
+      featured: false, order: Number(active.order || 0) + 1
     };
     const saved = await api("/api/admin/projects", { method: "POST", body: copy });
     notify("Project duplicated");
@@ -160,157 +172,244 @@ export default function ProjectManager() {
   }
 
   async function quickToggle(field) {
-    if (!active._id) {
-      updateField(field, !active[field]);
-      return;
-    }
+    if (!active._id) { updateField(field, !active[field]); return; }
     const saved = await api(`/api/admin/projects/${active._id}`, { method: "PATCH", body: { [field]: !active[field] } });
     setActive(saved);
     await load();
   }
 
+  const folder = active.mediaFolder || folderFromProject(active);
+  const isNew = !active._id;
+
   return (
-    <section className="workspace project-manager">
-      <div className="section-head">
-        <div>
+    <section className="workspace">
+      {/* Page header */}
+      <div className="page-header">
+        <div className="page-header-text">
           <p className="eyebrow">Portfolio CMS</p>
           <h1>Projects</h1>
+          <p>Add, edit, reorder, and publish projects. Each project supports cover images, photo galleries, videos, reels, and SEO.</p>
         </div>
-        <div className="project-actions">
-          <button className="secondary" onClick={() => setActive(blankProject)}><Plus size={18} /> Add Project</button>
-          {active?._id && <button className="secondary" onClick={duplicateProject}><RotateCcw size={18} /> Duplicate</button>}
-          <button onClick={saveProject} disabled={saving}><Save size={18} /> {active?._id ? "Update Project" : "Create Project"}</button>
-          {active?._id && <button className="danger" onClick={() => setConfirm(active)}><Trash2 size={18} /> Delete</button>}
+        <div className="page-header-actions">
+          <button className="btn-secondary" onClick={() => { setActive(blankProject); setTab("info"); }}>
+            <Plus size={16} /> New Project
+          </button>
+          {active?._id && (
+            <button className="btn-secondary" onClick={duplicate}><RotateCcw size={16} /> Duplicate</button>
+          )}
+          <button onClick={save} disabled={saving}>
+            <Save size={16} /> {isNew ? "Create" : "Update"}
+          </button>
+          {active?._id && (
+            <button className="btn-danger" onClick={() => setConfirm(active)}><Trash2 size={16} /></button>
+          )}
         </div>
       </div>
 
       <div className="project-grid-layout">
+        {/* Left: project browser */}
         <aside className="project-browser">
           <div className="project-search">
-            <Search size={18} />
-            <input placeholder="Search projects" value={query} onChange={(event) => setQuery(event.target.value)} />
+            <Search size={15} />
+            <input placeholder="Search projects…" value={query} onChange={e => setQuery(e.target.value)} />
           </div>
           <div className="project-list">
-            {filteredProjects.map((project) => (
-              <button className={active?._id === project._id ? "project-list-card active" : "project-list-card"} key={project._id} onClick={() => setActive(project)}>
+            {filtered.map(p => (
+              <button
+                key={p._id}
+                className={`project-list-card${active?._id === p._id ? " active" : ""}`}
+                onClick={() => { setActive(p); setTab("info"); }}
+              >
                 <div className="project-list-image">
-                  {primaryImage(project) ? <img src={assetUrl(primaryImage(project))} alt={project.title} /> : <span>No image</span>}
+                  {primaryImage(p) ? <img src={assetUrl(primaryImage(p))} alt={p.title} /> : <span>No image</span>}
                 </div>
                 <div>
-                  <strong>{project.title}</strong>
-                  <small>{project.enabled ? "Visible" : "Hidden"} · {project.featured ? "Featured" : "Normal"}</small>
+                  <strong>{p.title}</strong>
+                  <small>
+                    <span className={`badge ${p.enabled ? "badge-success" : "badge-muted"}`} style={{ fontSize: 9, padding: "1px 6px" }}>
+                      {p.enabled ? "Live" : "Hidden"}
+                    </span>
+                    {" "}{p.featured ? "⭐ Featured" : ""}
+                  </small>
+                  <small style={{ marginTop: 2 }}>{p.projectType || p.eventType || "—"}</small>
                 </div>
               </button>
             ))}
+            {!filtered.length && <div className="empty-state" style={{ margin: 12 }}>No projects found.</div>}
           </div>
+          <button className="browser-add-btn" onClick={() => { setActive(blankProject); setTab("info"); }}>
+            <Plus size={15} /> Add New Project
+          </button>
         </aside>
 
-        <div className="project-editor">
-          <div className="project-preview-panel">
-            <div className="project-preview-media">
-              {primaryImage(active) ? <img src={assetUrl(primaryImage(active))} alt={active.title || "Project"} /> : <div>No cover image selected</div>}
+        {/* Right: editor */}
+        <div className="editor-panel">
+          {/* Preview strip */}
+          <div className="preview-strip">
+            <div className="preview-image">
+              {primaryImage(active)
+                ? <img src={assetUrl(primaryImage(active))} alt={active.title} />
+                : <ImageIcon size={22} style={{ color: "var(--text-dim)" }} />}
             </div>
-            <div className="project-preview-copy">
-              <p className="eyebrow">Current project</p>
+            <div className="preview-info">
               <h2>{active.title || "New Project"}</h2>
-              <p>{active.excerpt || "Add project summary, client, year, category, images, and videos."}</p>
-              <div className="status-pills">
-                <button className={active.enabled ? "pill active" : "pill"} onClick={() => quickToggle("enabled")}><Eye size={15} /> {active.enabled ? "Visible" : "Hidden"}</button>
-                <button className={active.featured ? "pill active" : "pill"} onClick={() => quickToggle("featured")}><Check size={15} /> {active.featured ? "Featured" : "Make Featured"}</button>
+              <p>{active.excerpt || "Add a short description for this project."}</p>
+              <div className="preview-pills">
+                <button className={`pill${active.enabled ? " active" : ""}`} onClick={() => quickToggle("enabled")}>
+                  <Eye size={13} /> {active.enabled ? "Visible" : "Hidden"}
+                </button>
+                <button className={`pill${active.featured ? " active" : ""}`} onClick={() => quickToggle("featured")}>
+                  <Check size={13} /> {active.featured ? "Featured" : "Make Featured"}
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="project-form-grid">
-            <label>
-              <span>Project Title</span>
-              <input value={active.title || ""} onChange={(event) => updateField("title", event.target.value)} />
-            </label>
-            <label>
-              <span>Slug</span>
-              <input value={active.slug || ""} onChange={(event) => updateField("slug", event.target.value)} />
-            </label>
-            <label>
-              <span>Client</span>
-              <input value={active.client || ""} onChange={(event) => updateField("client", event.target.value)} />
-            </label>
-            <label>
-              <span>Year</span>
-              <input value={active.year || ""} onChange={(event) => updateField("year", event.target.value)} />
-            </label>
-            <label>
-              <span>Project Type</span>
-              <input placeholder="Wedding, corporate, product, portfolio" value={active.projectType || ""} onChange={(event) => updateField("projectType", event.target.value)} />
-            </label>
-            <label>
-              <span>Event Type</span>
-              <input placeholder="Launch, conference, campaign, reel shoot" value={active.eventType || ""} onChange={(event) => updateField("eventType", event.target.value)} />
-            </label>
-            <label>
-              <span>Categories</span>
-              <input value={Array.isArray(active.categories) ? active.categories.join(", ") : active.categories || ""} onChange={(event) => updateField("categories", event.target.value)} />
-            </label>
-            <label>
-              <span>Technologies Used</span>
-              <input placeholder="React, GSAP, Node, AI" value={Array.isArray(active.technologies) ? active.technologies.join(", ") : active.technologies || ""} onChange={(event) => updateField("technologies", event.target.value)} />
-            </label>
-            <label>
-              <span>Live Website Link</span>
-              <input placeholder="https://example.com" value={active.liveUrl || ""} onChange={(event) => updateField("liveUrl", event.target.value)} />
-            </label>
-            <label>
-              <span>Order</span>
-              <input type="number" value={active.order || 0} onChange={(event) => updateField("order", event.target.value)} />
-            </label>
+          {/* Tabs */}
+          <div className="editor-tabs">
+            {TABS.map(({ id, label, icon: Icon }) => (
+              <button key={id} className={`tab-btn${tab === id ? " active" : ""}`} onClick={() => setTab(id)}>
+                <Icon size={14} />{label}
+              </button>
+            ))}
           </div>
 
-          <div className="folder-panel">
-            <div>
-              <p className="eyebrow">Project Folder</p>
-              <strong>{active.mediaFolder || folderFromProject(active)}</strong>
-              <small>Photos, videos, and reels uploaded below will be saved in this folder.</small>
+          {/* Tab: Info */}
+          {tab === "info" && (
+            <div className="editor-body">
+              <div className="form-grid">
+                <label className="field">
+                  <span>Project Title *</span>
+                  <input value={active.title || ""} onChange={e => updateField("title", e.target.value)} placeholder="My Awesome Project" />
+                </label>
+                <label className="field">
+                  <span>URL Slug</span>
+                  <input value={active.slug || ""} onChange={e => updateField("slug", e.target.value)} placeholder="auto-generated" />
+                </label>
+                <label className="field">
+                  <span>Client</span>
+                  <input value={active.client || ""} onChange={e => updateField("client", e.target.value)} placeholder="Client name" />
+                </label>
+                <label className="field">
+                  <span>Year</span>
+                  <input value={active.year || ""} onChange={e => updateField("year", e.target.value)} placeholder="2024" />
+                </label>
+                <label className="field">
+                  <span>Project Type</span>
+                  <input value={active.projectType || ""} onChange={e => updateField("projectType", e.target.value)} placeholder="Wedding, corporate, product…" />
+                </label>
+                <label className="field">
+                  <span>Event Type</span>
+                  <input value={active.eventType || ""} onChange={e => updateField("eventType", e.target.value)} placeholder="Launch, campaign, reel shoot…" />
+                </label>
+                <label className="field">
+                  <span>Live Website URL</span>
+                  <input value={active.liveUrl || ""} onChange={e => updateField("liveUrl", e.target.value)} placeholder="https://example.com" />
+                </label>
+                <label className="field">
+                  <span>Display Order</span>
+                  <input type="number" value={active.order || 0} onChange={e => updateField("order", e.target.value)} />
+                </label>
+              </div>
+
+              <div className="divider" />
+
+              <div className="form-grid cols-1">
+                <label className="field">
+                  <span>Categories</span>
+                  <TagInput value={active.categories} onChange={v => updateField("categories", v)} placeholder="Type and press Enter…" />
+                </label>
+                <label className="field">
+                  <span>Technologies Used</span>
+                  <TagInput value={active.technologies} onChange={v => updateField("technologies", v)} placeholder="React, GSAP, Node.js…" />
+                </label>
+                <label className="field">
+                  <span>Short Description / Excerpt</span>
+                  <textarea rows={3} value={active.excerpt || ""} onChange={e => updateField("excerpt", e.target.value)} placeholder="One or two sentences describing this project…" />
+                </label>
+                <label className="field">
+                  <span>Full Project Details</span>
+                  <textarea rows={6} value={active.body || ""} onChange={e => updateField("body", e.target.value)} placeholder="Detailed description, context, and outcomes…" />
+                </label>
+              </div>
             </div>
-            <label>
-              <span>Folder Path</span>
-              <input value={active.mediaFolder || folderFromProject(active)} onChange={(event) => updateField("mediaFolder", event.target.value)} />
-            </label>
-          </div>
+          )}
 
-          <label>
-            <span>Short Description</span>
-            <textarea rows={3} value={active.excerpt || ""} onChange={(event) => updateField("excerpt", event.target.value)} />
-          </label>
-
-          <label>
-            <span>Project Details</span>
-            <textarea rows={6} value={active.body || ""} onChange={(event) => updateField("body", event.target.value)} />
-          </label>
-
-          <div className="project-media-section">
-            <div className="media-section-title">
-              <Upload size={18} />
-              <strong>Upload into {active.mediaFolder || folderFromProject(active)}</strong>
+          {/* Tab: Media */}
+          {tab === "media" && (
+            <div className="editor-body">
+              <div className="editor-section-title">
+                <FolderOpen size={14} /> Media Folder: <code style={{ color: "var(--brand-bright)", fontSize: 12 }}>{folder}</code>
+              </div>
+              <div className="form-grid cols-1">
+                <label className="field">
+                  <span>Folder Path</span>
+                  <input value={folder} onChange={e => updateField("mediaFolder", e.target.value)} />
+                </label>
+              </div>
+              <div className="divider" />
+              <div className="project-media-section">
+                <div className="media-section-title"><Upload size={16} /> Upload Media</div>
+                <MediaField label="Cover Image" value={active.coverImage} accept="image" defaultFolder={folder} onChange={v => updateField("coverImage", v)} />
+                <MediaField label="Project Photos" value={active.images || []} accept="image" multiple defaultFolder={`${folder}/photos`} onChange={v => updateField("images", v)} />
+                <MediaField label="Project Videos" value={active.videos || []} accept="video" multiple defaultFolder={`${folder}/videos`} onChange={v => updateField("videos", v)} />
+                <MediaField label="Project Reels" value={active.reels || []} accept="video" multiple defaultFolder={`${folder}/reels`} onChange={v => updateField("reels", v)} />
+              </div>
             </div>
-            <MediaField label="Cover Image" value={active.coverImage} accept="image" defaultFolder={active.mediaFolder || folderFromProject(active)} onChange={(value) => updateField("coverImage", value)} />
-            <MediaField label="Project Photos" value={active.images || []} accept="image" multiple defaultFolder={`${active.mediaFolder || folderFromProject(active)}/photos`} onChange={(value) => updateField("images", value)} />
-            <MediaField label="Project Videos" value={active.videos || []} accept="video" multiple defaultFolder={`${active.mediaFolder || folderFromProject(active)}/videos`} onChange={(value) => updateField("videos", value)} />
-            <MediaField label="Project Reels" value={active.reels || []} accept="video" multiple defaultFolder={`${active.mediaFolder || folderFromProject(active)}/reels`} onChange={(value) => updateField("reels", value)} />
-          </div>
+          )}
 
-          <div className="project-form-grid">
-            <label>
-              <span>Detail Sections JSON</span>
-              <textarea rows={8} value={typeof active.detailSections === "string" ? active.detailSections : JSON.stringify(active.detailSections || [], null, 2)} onChange={(event) => updateField("detailSections", event.target.value)} />
-            </label>
-            <label>
-              <span>SEO JSON</span>
-              <textarea rows={8} value={typeof active.seo === "string" ? active.seo : JSON.stringify(active.seo || {}, null, 2)} onChange={(event) => updateField("seo", event.target.value)} />
-            </label>
-          </div>
+          {/* Tab: SEO */}
+          {tab === "seo" && (
+            <div className="editor-body">
+              <div className="editor-section-title"><Layers size={14} /> Search Engine Optimization</div>
+              <div className="form-grid cols-1">
+                {["metaTitle", "metaDescription", "canonicalUrl"].map(k => (
+                  <label key={k} className="field">
+                    <span>{k.replace(/([A-Z])/g, " $1").replace(/^./, c => c.toUpperCase())}</span>
+                    {k === "metaDescription"
+                      ? <textarea rows={3} value={(typeof active.seo === "object" ? active.seo?.[k] : "") || ""} onChange={e => updateField("seo", { ...(active.seo || {}), [k]: e.target.value })} />
+                      : <input value={(typeof active.seo === "object" ? active.seo?.[k] : "") || ""} onChange={e => updateField("seo", { ...(active.seo || {}), [k]: e.target.value })} />
+                    }
+                  </label>
+                ))}
+                <MediaField label="OG Image" value={(typeof active.seo === "object" && active.seo?.ogImage) || null} accept="image" defaultFolder={folder} onChange={v => updateField("seo", { ...(active.seo || {}), ogImage: v })} />
+              </div>
+            </div>
+          )}
 
-          <div className="editor-actions project-bottom-actions">
-            <button className="secondary" onClick={() => active?._id ? load() : setActive(blankProject)}>Cancel Changes</button>
-            <button onClick={saveProject} disabled={saving}><Save size={18} /> {active?._id ? "Update Project" : "Create Project"}</button>
+          {/* Tab: Advanced */}
+          {tab === "advanced" && (
+            <div className="editor-body">
+              <div className="editor-section-title"><Settings2 size={14} /> Advanced / Developer</div>
+              <div className="form-grid cols-1">
+                <label className="field">
+                  <span>Detail Sections JSON</span>
+                  <textarea
+                    rows={10}
+                    value={typeof active.detailSections === "string" ? active.detailSections : JSON.stringify(active.detailSections || [], null, 2)}
+                    onChange={e => updateField("detailSections", e.target.value)}
+                  />
+                </label>
+                <label className="field">
+                  <span>SEO JSON (raw)</span>
+                  <textarea
+                    rows={8}
+                    value={typeof active.seo === "string" ? active.seo : JSON.stringify(active.seo || {}, null, 2)}
+                    onChange={e => updateField("seo", e.target.value)}
+                  />
+                </label>
+              </div>
+            </div>
+          )}
+
+          {/* Actions bar */}
+          <div className="editor-actions">
+            <button className="btn-secondary" onClick={() => active?._id ? load() : setActive(blankProject)}>
+              Cancel
+            </button>
+            <button onClick={save} disabled={saving}>
+              <Save size={15} /> {isNew ? "Create Project" : "Save Changes"}
+            </button>
           </div>
         </div>
       </div>
@@ -318,7 +417,7 @@ export default function ProjectManager() {
       <ConfirmModal
         open={!!confirm}
         title="Delete project?"
-        body={`This will remove "${confirm?.title}" from the CMS. Existing website asset files will stay on disk.`}
+        body={`This will permanently remove "${confirm?.title}" from the CMS. Uploaded media files remain in the library.`}
         onCancel={() => setConfirm(null)}
         onConfirm={deleteProject}
       />

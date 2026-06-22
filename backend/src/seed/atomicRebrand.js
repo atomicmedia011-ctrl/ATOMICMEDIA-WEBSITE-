@@ -83,6 +83,12 @@ async function rebrand() {
   await Project.deleteMany({});
   for (const [index, item] of projectData.entries()) {
     const [slug, title, excerpt, challenge, solution, results] = item;
+    const projectFolder = assetSlugs[index] || assetSlugs[0];
+    const image1 = `/assets/projects/${projectFolder}/home.webp`;
+    const image2 = `/assets/projects/${assetSlugs[(index + 1) % assetSlugs.length]}/home.webp`;
+    const image3 = `/assets/projects/${assetSlugs[(index + 2) % assetSlugs.length]}/home.webp`;
+    const image4 = `/assets/projects/${assetSlugs[(index + 3) % assetSlugs.length]}/home.webp`;
+
     await Project.create({
       slug,
       title,
@@ -97,8 +103,16 @@ async function rebrand() {
       featured: index < 4,
       enabled: true,
       order: index,
-      coverImage: { url: `/assets/projects/${assetSlugs[index] || assetSlugs[0]}/home.webp`, type: "image", alt: title },
-      images: [{ url: `/assets/projects/${assetSlugs[index] || assetSlugs[0]}/home.webp`, type: "image", alt: title }],
+      coverImage: { url: image1, type: "image", alt: `${title} Cover` },
+      images: [
+        { url: image1, type: "image", alt: `${title} Main` },
+        { url: image2, type: "image", alt: `${title} Detail 1` },
+        { url: image3, type: "image", alt: `${title} Detail 2` },
+        { url: image4, type: "image", alt: `${title} Showcase` }
+      ],
+      videos: [
+        { url: "/assets/videos/about-hero.mp4", type: "video", alt: `${title} Video Overview` }
+      ],
       detailSections: [{ challenge }, { solution }, { results }],
       seo: {
         metaTitle: `${title} | Atomic Media Case Study`,
@@ -179,10 +193,14 @@ async function rebrand() {
   );
 
   console.log("Atomic Media CMS data rebrand complete");
-  process.exit(0);
 }
 
-rebrand().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+module.exports = rebrand;
+
+if (require.main === module) {
+  rebrand().then(() => process.exit(0)).catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}
+
