@@ -20471,7 +20471,7 @@ class AudioItem {
         }
     }
     setFinalVolume(e) {
-        this.audioObject ? .setVolume(e * this.volume)
+        this.audioObject ?.setVolume(e * this.volume)
     }
     activateFilter() {
         if (this.needsFilter && this.biquadFilter) {
@@ -20636,7 +20636,7 @@ class Audios {
         t = this._counts[e] = (t + 1) % r, this.items[e + "_" + t].play()
     }
     fadeBgMusic(e, t = 1, r = void 0) {
-        SKIP_AUDIO || this.currBgMusicId !== e && (this.prevBgMusicId = this.currBgMusicId, this.currBgMusicId = e, r === void 0 && (r = t), this.items[this.prevBgMusicId] ? .setFadeOut(r), this.items[this.currBgMusicId] ? .setFadeIn(t))
+        SKIP_AUDIO || this.currBgMusicId !== e && (this.prevBgMusicId = this.currBgMusicId, this.currBgMusicId = e, r === void 0 && (r = t), this.items[this.prevBgMusicId] ?.setFadeOut(r), this.items[this.currBgMusicId] ?.setFadeIn(t))
     }
     update(e) {
         if (!SKIP_AUDIO && (globalAudios.update(e), this.listener)) {
@@ -21013,7 +21013,7 @@ class Line {
 const isNode = typeof global < "u" && {}.toString.call(global) === "[object global]",
     isBun = typeof Bun < "u",
     isDeno = typeof Deno < "u",
-    isCloudflareWorker = typeof WebSocketPair == "function" && typeof caches ? .default < "u",
+    isCloudflareWorker = typeof WebSocketPair == "function" && typeof caches ?.default < "u",
     isServerRuntime = isNode || isBun || isDeno || isCloudflareWorker;
 
 function getMethodName(o, e) {
@@ -21691,7 +21691,7 @@ class TimingSrcConnector extends EventTarget {
         }
     }
     log(e) {
-        this.logger ? .(`TimingSrcConnector: ${e}`)
+        this.logger ?.(`TimingSrcConnector: ${e}`)
     }
     speedAdjustment = 0;
     adjustSpeed = async (e, t) => {
