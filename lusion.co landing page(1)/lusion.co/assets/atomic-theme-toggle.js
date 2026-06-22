@@ -3,7 +3,7 @@
   var INSTAGRAM = "https://www.instagram.com/atomic.media.in?igsh=MWFrbGh3a3ppbnMwaQ==";
   var LINKEDIN = "https://www.linkedin.com/company/atomic-mediaa/";
   var THEME_KEY = "atomic-media-selected-theme";
-  var currentTheme = "dark";
+  var currentTheme = "white";
 
   function savedTheme() {
     try {
@@ -11,10 +11,10 @@
       localStorage.removeItem("atomic-media-theme-v2");
       localStorage.removeItem("atomic-media-theme-v3");
       localStorage.removeItem("atomic-media-theme-v4");
-      return localStorage.getItem(THEME_KEY) === "white" ? "white" : "dark";
+      return localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "white";
     } catch (error) {
     }
-    return "dark";
+    return "white";
   }
 
   function applyTheme(theme) {

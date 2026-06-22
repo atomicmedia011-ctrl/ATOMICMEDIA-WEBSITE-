@@ -4018,80 +4018,24 @@ html.atomic-theme-white #atomic-theme-toggle span[aria-current="true"] {
   color: #111 !important;
 }
 
-/* Raw background reset: keep content/nav fixes, remove custom page backgrounds */
-html,
-body,
-html.atomic-theme-dark,
-html.atomic-theme-dark body,
-html.atomic-theme-white,
-html.atomic-theme-white body {
-  background: #000 !important;
-  background-image: none !important;
-  background-color: #000 !important;
-}
-
-#canvas,
-#ui,
-#home-reel,
-#home-featured,
-#home-goal,
-#page-extra-sections,
-#end-section,
-#footer-section,
-.atomic-service-page,
-.atomic-service-hero,
-.atomic-feature-section,
-html.atomic-theme-dark #canvas,
-html.atomic-theme-dark #ui,
-html.atomic-theme-dark #home-reel,
-html.atomic-theme-dark #home-featured,
-html.atomic-theme-dark #home-goal,
-html.atomic-theme-dark #page-extra-sections,
-html.atomic-theme-dark #end-section,
-html.atomic-theme-dark #footer-section,
-html.atomic-theme-dark .atomic-service-page,
-html.atomic-theme-dark .atomic-service-hero,
-html.atomic-theme-dark .atomic-feature-section,
-html.atomic-theme-white #canvas,
-html.atomic-theme-white #ui,
-html.atomic-theme-white #home-reel,
-html.atomic-theme-white #home-featured,
-html.atomic-theme-white #home-goal,
-html.atomic-theme-white #page-extra-sections,
-html.atomic-theme-white #end-section,
-html.atomic-theme-white #footer-section,
-html.atomic-theme-white .atomic-service-page,
-html.atomic-theme-white .atomic-service-hero,
-html.atomic-theme-white .atomic-feature-section {
-  background: transparent !important;
-  background-image: none !important;
-  background-color: transparent !important;
-}
-
-#ui::before,
-#ui::after,
-#page-extra-sections::before,
-#page-extra-sections::after,
-#end-section::before,
-#end-section::after,
-#footer-section::before,
-#footer-section::after,
-.atomic-footer-background-gradient,
-html.atomic-theme-dark #ui::before,
-html.atomic-theme-dark #ui::after,
-html.atomic-theme-dark #footer-section::before,
-html.atomic-theme-dark #footer-section::after,
-html.atomic-theme-dark .atomic-footer-background-gradient,
-html.atomic-theme-white #ui::before,
-html.atomic-theme-white #ui::after,
-html.atomic-theme-white #footer-section::before,
-html.atomic-theme-white #footer-section::after,
-html.atomic-theme-white .atomic-footer-background-gradient {
+/* Remove the orange menu-open page wash */
+html.atomic-menu-open body::after {
   content: none !important;
   display: none !important;
   background: transparent !important;
-  background-image: none !important;
-  box-shadow: none !important;
-  filter: none !important;
   opacity: 0 !important;
+}
+
+#header-menu.--opened {
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: #111 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12) !important;
+  backdrop-filter: blur(18px) saturate(1.05) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.05) !important;
+}
+
+#header-menu.--opened .header-menu-link-text,
+#header-menu.--opened .header-menu-link-text-clone {
+  color: #111 !important;
+  -webkit-text-fill-color: #111 !important;
 }
