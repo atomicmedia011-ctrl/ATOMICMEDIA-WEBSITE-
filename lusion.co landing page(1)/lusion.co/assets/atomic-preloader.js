@@ -8,6 +8,7 @@
         function dismissPreloader() {
             if (dismissed || preloader.classList.contains("is-hidden")) return;
             dismissed = true;
+            document.documentElement.classList.add("is-ready");
             preloader.classList.add("is-exiting");
             window.setTimeout(function () {
                 preloader.classList.add("is-hidden");
