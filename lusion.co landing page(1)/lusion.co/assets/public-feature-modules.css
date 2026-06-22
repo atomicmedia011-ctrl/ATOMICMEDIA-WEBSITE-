@@ -84,68 +84,6 @@ body {
 #header-right-menu-btn {
   transform: scale(1) !important;
 }
-
-html.atomic-theme-dark,
-html.atomic-theme-dark body {
-  background: #000 !important;
-  color: #fff !important;
-}
-
-html.atomic-theme-dark #canvas {
-  background: #000 !important;
-}
-
-html.atomic-theme-dark #ui::before {
-  background: rgba(0, 0, 0, 0.72) !important;
-}
-
-html.atomic-theme-dark #header {
-  color: #fff !important;
-}
-
-html.atomic-theme-dark #header-right-talk-btn {
-  background: rgba(255, 255, 255, 0.12) !important;
-  color: #fff !important;
-}
-
-html.atomic-theme-dark #header-right-menu-btn {
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: #050505 !important;
-}
-
-html.atomic-theme-dark #atomic-theme-toggle {
-  border-color: rgba(255, 255, 255, 0.14) !important;
-  background: rgba(0, 0, 0, 0.56) !important;
-  color: #fff !important;
-}
-
-html.atomic-theme-dark #atomic-theme-toggle span[aria-current="true"] {
-  background: #fff !important;
-  color: #050505 !important;
-}
-
-html.atomic-theme-dark #page-extra-sections,
-html.atomic-theme-dark #footer-section,
-html.atomic-theme-dark .atomic-service-page,
-html.atomic-theme-dark .atomic-service-hero,
-html.atomic-theme-dark .atomic-feature-section {
-  background: #000 !important;
-}
-
-html.atomic-theme-dark #footer-section::before {
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
-    rgba(0, 0, 0, 0.9) !important;
-}
-
-html.atomic-theme-dark #home-reel,
-html.atomic-theme-dark #home-featured,
-html.atomic-theme-dark #home-goal,
-html.atomic-theme-dark #end-section,
-html.atomic-theme-dark #footer-section {
-  color: #fff !important;
-}
-
 @media (max-width: 812px) {
   #atomic-theme-toggle {
     top: 0 !important;
@@ -3820,12 +3758,6 @@ html.atomic-menu-open .project-list {
   -webkit-text-fill-color: currentColor !important;
   opacity: 1 !important;
 }
-
-html.atomic-theme-white #header:not(.--menu-opened) #header-logo.atomic-header-brand .atomic-header-wordmark,
-html.atomic-theme-white #header:not(.--menu-opened) #header-logo.atomic-header-brand .atomic-header-wordmark * {
-  color: #fff !important;
-}
-
 #header.--menu-opened,
 #header.--menu-opened #header-right,
 #header.--menu-opened #header-menu,
@@ -3856,104 +3788,6 @@ html.atomic-theme-white #header:not(.--menu-opened) #header-logo.atomic-header-b
   color: #9a3d00 !important;
   -webkit-text-fill-color: #9a3d00 !important;
 }
-
-#footer-section,
-html.atomic-theme-dark #footer-section {
-  color: #111 !important;
-  background:
-    radial-gradient(900px 520px at 78% 18%, rgba(255, 106, 0, 0.16), transparent 58%),
-    linear-gradient(180deg, #fff8ef 0%, #f5ede3 48%, #eee2d5 100%) !important;
-}
-
-.atomic-footer-background-gradient,
-html.atomic-theme-dark .atomic-footer-background-gradient {
-  background:
-    radial-gradient(900px 520px at 78% 18%, rgba(255, 106, 0, 0.18), transparent 58%),
-    linear-gradient(180deg, #fff8ef 0%, #f5ede3 48%, #eee2d5 100%) !important;
-}
-
-#footer-section::before,
-html.atomic-theme-dark #footer-section::before {
-  border-color: rgba(18, 18, 18, 0.1) !important;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42)),
-    rgba(255, 255, 255, 0.48) !important;
-  box-shadow:
-    0 24px 74px rgba(90, 56, 24, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(10px) saturate(1.02) !important;
-  -webkit-backdrop-filter: blur(10px) saturate(1.02) !important;
-}
-
-#footer-section::after,
-html.atomic-theme-dark #footer-section::after {
-  opacity: 0.24 !important;
-  filter: blur(70px) !important;
-}
-
-#footer-section #footer-contact-address .footer-brand-title,
-#footer-section #footer-contact-address .footer-address-line:first-child,
-#footer-newsletter-header,
-#footer-enquires-link,
-#footer-business-link,
-#footer-bottom a,
-#footer-bottom-up,
-html.atomic-theme-dark #footer-section #footer-contact-address .footer-brand-title,
-html.atomic-theme-dark #footer-section #footer-contact-address .footer-address-line:first-child,
-html.atomic-theme-dark #footer-newsletter-header,
-html.atomic-theme-dark #footer-enquires-link,
-html.atomic-theme-dark #footer-business-link,
-html.atomic-theme-dark #footer-bottom a,
-html.atomic-theme-dark #footer-bottom-up {
-  color: #111 !important;
-  -webkit-text-fill-color: #111 !important;
-  text-shadow: none !important;
-}
-
-#footer-section #footer-contact-address .footer-brand-copy,
-#footer-section #footer-contact-address .footer-address-line,
-.footer-address-line:not(:first-child),
-#footer-enquires-header,
-#footer-business-header,
-#footer-bottom,
-html.atomic-theme-dark #footer-section #footer-contact-address .footer-brand-copy,
-html.atomic-theme-dark #footer-section #footer-contact-address .footer-address-line,
-html.atomic-theme-dark .footer-address-line:not(:first-child),
-html.atomic-theme-dark #footer-enquires-header,
-html.atomic-theme-dark #footer-business-header,
-html.atomic-theme-dark #footer-bottom {
-  color: rgba(17, 17, 17, 0.64) !important;
-  -webkit-text-fill-color: currentColor !important;
-}
-
-.footer-socials-line,
-html.atomic-theme-dark .footer-socials-line,
-#footer-bottom-up,
-html.atomic-theme-dark #footer-bottom-up {
-  border-color: rgba(17, 17, 17, 0.12) !important;
-  background: rgba(255, 255, 255, 0.54) !important;
-  color: #111 !important;
-}
-
-#footer-newsletter-form,
-html.atomic-theme-dark #footer-newsletter-form {
-  border-color: rgba(17, 17, 17, 0.13) !important;
-  background: rgba(255, 255, 255, 0.58) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    0 16px 48px rgba(90, 56, 24, 0.12) !important;
-}
-
-#footer-newsletter-input-field,
-html.atomic-theme-dark #footer-newsletter-input-field {
-  color: #111 !important;
-}
-
-#footer-newsletter-input-field::placeholder,
-html.atomic-theme-dark #footer-newsletter-input-field::placeholder {
-  color: rgba(17, 17, 17, 0.42) !important;
-}
-
 .atomic-footer-text-shadow {
   stroke: rgba(17, 17, 17, 0.24) !important;
 }
@@ -4064,42 +3898,113 @@ html.atomic-theme-dark #footer-newsletter-input-field::placeholder {
 }
 
 /* ============================================================
-   White theme: white glass background
+   Atomic Media two themes only
+   Dark = black cinematic theme. White = grey glass theme.
    ============================================================ */
-html.atomic-theme-white,
-html.atomic-theme-white body {
-  background:
-    radial-gradient(760px 470px at 50% 80%, rgba(255, 106, 0, 0.1), transparent 66%),
-    radial-gradient(820px 460px at 74% 78%, rgba(17, 17, 17, 0.05), transparent 68%),
-    linear-gradient(90deg, #ffffff 0%, #f7f7f8 34%, #efeff2 66%, #ffffff 100%) !important;
-  color: #111 !important;
+html.atomic-theme-dark,
+html.atomic-theme-dark body {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  color-scheme: dark;
 }
 
-html.atomic-theme-white #canvas {
+html.atomic-theme-dark #canvas,
+html.atomic-theme-dark #ui,
+html.atomic-theme-dark #home-reel,
+html.atomic-theme-dark #home-featured,
+html.atomic-theme-dark #home-goal,
+html.atomic-theme-dark #page-extra-sections,
+html.atomic-theme-dark #end-section,
+html.atomic-theme-dark #footer-section,
+html.atomic-theme-dark .atomic-service-page,
+html.atomic-theme-dark .atomic-service-hero,
+html.atomic-theme-dark .atomic-feature-section {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.atomic-theme-dark #ui::before {
   background:
-    radial-gradient(760px 470px at 50% 80%, rgba(255, 106, 0, 0.1), transparent 66%),
-    radial-gradient(820px 460px at 74% 78%, rgba(17, 17, 17, 0.05), transparent 68%),
-    linear-gradient(90deg, #ffffff 0%, #f7f7f8 34%, #efeff2 66%, #ffffff 100%) !important;
+    radial-gradient(760px 520px at 50% 82%, rgba(255, 106, 0, 0.1), transparent 68%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.72)) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.atomic-theme-dark #footer-section::before,
+html.atomic-theme-dark #footer-section::after,
+html.atomic-theme-dark .atomic-footer-background-gradient {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.atomic-theme-dark #home-reel-video-container svg path,
+html.atomic-theme-dark .home-reel-video-container-svg-wrapper svg path {
+  fill: rgba(255, 255, 255, 0.86) !important;
+}
+
+html.atomic-theme-dark .home-reel-video-container-cross::before,
+html.atomic-theme-dark .home-reel-video-container-cross::after {
+  background: rgba(255, 255, 255, 0.86) !important;
+}
+
+html.atomic-theme-dark #atomic-theme-toggle {
+  background: rgba(0, 0, 0, 0.54) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+}
+
+html.atomic-theme-dark #atomic-theme-toggle span[aria-current="true"] {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+html.atomic-theme-white,
+html.atomic-theme-white body {
+  --color-off-white: #e7e7eb;
+  --color-black: #171717;
+  --color-blue: #b9bac1;
+  background:
+    radial-gradient(900px 540px at 50% 8%, rgba(255, 255, 255, 0.95), transparent 62%),
+    radial-gradient(820px 520px at 74% 72%, rgba(255, 106, 0, 0.08), transparent 70%),
+    linear-gradient(135deg, #f6f6f7 0%, #ececf0 46%, #d8d8de 100%) !important;
+  color: #fff !important;
+  color-scheme: light;
+}
+
+html.atomic-theme-white #canvas,
+html.atomic-theme-white #ui,
+html.atomic-theme-white #home-reel,
+html.atomic-theme-white #home-featured,
+html.atomic-theme-white #home-goal,
+html.atomic-theme-white #page-extra-sections,
+html.atomic-theme-white #end-section {
+  background:
+    radial-gradient(900px 560px at 52% 42%, rgba(120, 96, 104, 0.24), transparent 64%),
+    linear-gradient(135deg, #b7b8bd 0%, #a9aaaf 46%, #8f9096 100%) !important;
+  color: #fff !important;
 }
 
 html.atomic-theme-white #ui::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.34) 42%, rgba(255, 255, 255, 0.18)),
-    radial-gradient(ellipse at 52% 76%, rgba(255, 106, 0, 0.12) 0%, transparent 58%) !important;
+    linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
+    radial-gradient(ellipse at 52% 62%, rgba(120, 76, 86, 0.24) 0%, transparent 60%) !important;
+  opacity: 1 !important;
+  backdrop-filter: blur(10px) saturate(1.05) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.05) !important;
 }
 
-html.atomic-theme-white #header {
-  color: #fff !important;
-}
-
-html.atomic-theme-white #header-right-talk-btn {
-  background: rgba(0, 0, 0, 0.72) !important;
-  color: #fff !important;
-}
-
-html.atomic-theme-white #header-right-menu-btn {
-  background: rgba(255, 255, 255, 0.68) !important;
-  color: #111 !important;
+html.atomic-theme-white #home-reel *,
+html.atomic-theme-white #home-featured *,
+html.atomic-theme-white #home-goal *,
+html.atomic-theme-white #end-section * {
+  color: inherit !important;
 }
 
 html.atomic-theme-white #atomic-theme-toggle {
@@ -4113,197 +4018,80 @@ html.atomic-theme-white #atomic-theme-toggle span[aria-current="true"] {
   color: #111 !important;
 }
 
-/* Hero / main sections */
+/* Raw background reset: keep content/nav fixes, remove custom page backgrounds */
+html,
+body,
+html.atomic-theme-dark,
+html.atomic-theme-dark body,
+html.atomic-theme-white,
+html.atomic-theme-white body {
+  background: #000 !important;
+  background-image: none !important;
+  background-color: #000 !important;
+}
+
+#canvas,
+#ui,
+#home-reel,
+#home-featured,
+#home-goal,
+#page-extra-sections,
+#end-section,
+#footer-section,
+.atomic-service-page,
+.atomic-service-hero,
+.atomic-feature-section,
+html.atomic-theme-dark #canvas,
+html.atomic-theme-dark #ui,
+html.atomic-theme-dark #home-reel,
+html.atomic-theme-dark #home-featured,
+html.atomic-theme-dark #home-goal,
+html.atomic-theme-dark #page-extra-sections,
+html.atomic-theme-dark #end-section,
+html.atomic-theme-dark #footer-section,
+html.atomic-theme-dark .atomic-service-page,
+html.atomic-theme-dark .atomic-service-hero,
+html.atomic-theme-dark .atomic-feature-section,
+html.atomic-theme-white #canvas,
+html.atomic-theme-white #ui,
 html.atomic-theme-white #home-reel,
 html.atomic-theme-white #home-featured,
-html.atomic-theme-white #home-goal {
-  color: #fff !important;
-}
-
-html.atomic-theme-white #home-reel *,
-html.atomic-theme-white #home-featured *,
-html.atomic-theme-white #home-goal * {
-  color: inherit !important;
-}
-
-html.atomic-theme-white .project-item {
-  color: #fff !important;
-}
-
-html.atomic-theme-white .project-item-footer {
-  color: #fff !important;
-}
-
-html.atomic-theme-white .project-item-line-1 {
-  color: rgba(255, 255, 255, 0.68) !important;
-}
-
-/* Featured projects section */
-html.atomic-theme-white #home-featured {
-  background:
-    radial-gradient(ellipse at 50% 80%, rgba(110, 63, 72, 0.2) 0%, transparent 60%),
-    linear-gradient(180deg, rgba(158, 157, 164, 0.94), rgba(124, 104, 112, 0.9)) !important;
-}
-
-html.atomic-theme-white #home-featured::before {
-  opacity: 0.06 !important;
-}
-
-html.atomic-theme-white #home-featured::after {
-  opacity: 0.04 !important;
-}
-
-/* Projects page title */
-html.atomic-theme-white .projects-main-title,
-html.atomic-theme-white .projects-main-title * {
-  color: #fff !important;
-}
-
-/* End section / CTA */
-html.atomic-theme-white #end-section {
-  background: transparent !important;
-}
-
-html.atomic-theme-white #end-section-title-link {
-  color: #fff !important;
-}
-
-html.atomic-theme-white #end-section-subtitle-text {
-  color: rgba(255, 255, 255, 0.68) !important;
-}
-
-/* Footer in white theme */
-html.atomic-theme-white #footer-section {
-  background:
-    radial-gradient(125% 125% at 50% 10%, #f0f0f3 45%, rgba(249, 115, 22, 0.1) 100%) !important;
-}
-
-html.atomic-theme-white .atomic-footer-background-gradient {
-  background: radial-gradient(125% 125% at 50% 10%, #f0f0f3 45%, rgba(249, 115, 22, 0.1) 100%) !important;
-}
-
-html.atomic-theme-white #footer-section::before {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.62)),
-    rgba(248, 248, 250, 0.8) !important;
-  box-shadow:
-    0 34px 120px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
-}
-
-html.atomic-theme-white #footer-section,
-html.atomic-theme-white #footer-section *,
+html.atomic-theme-white #home-goal,
+html.atomic-theme-white #page-extra-sections,
 html.atomic-theme-white #end-section,
-html.atomic-theme-white #end-section * {
-  color: #111 !important;
+html.atomic-theme-white #footer-section,
+html.atomic-theme-white .atomic-service-page,
+html.atomic-theme-white .atomic-service-hero,
+html.atomic-theme-white .atomic-feature-section {
+  background: transparent !important;
+  background-image: none !important;
+  background-color: transparent !important;
 }
 
-html.atomic-theme-white .footer-address-line:not(:first-child),
-html.atomic-theme-white #footer-enquires-header,
-html.atomic-theme-white #footer-business-header {
-  color: rgba(17, 17, 17, 0.55) !important;
-}
-
-html.atomic-theme-white .footer-socials-line {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-  background:
-    linear-gradient(145deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02)) !important;
-  color: #111 !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
-}
-
-html.atomic-theme-white .footer-socials-line:hover {
-  border-color: rgba(0, 0, 0, 0.18) !important;
-  background:
-    linear-gradient(145deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.03)) !important;
-}
-
-html.atomic-theme-white #footer-newsletter-form {
-  border-color: rgba(0, 0, 0, 0.12) !important;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.8)) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 20px 60px rgba(0, 0, 0, 0.06) !important;
-}
-
-html.atomic-theme-white #footer-newsletter-input-field {
-  color: #111 !important;
-}
-
-html.atomic-theme-white #footer-newsletter-input-field::placeholder {
-  color: rgba(17, 17, 17, 0.38) !important;
-}
-
-html.atomic-theme-white #footer-newsletter-input-arrow {
-  background: linear-gradient(145deg, #111, #333) !important;
-  color: #fff !important;
-}
-
-html.atomic-theme-white #footer-bottom {
-  border-top-color: rgba(0, 0, 0, 0.08) !important;
-  color: rgba(17, 17, 17, 0.5) !important;
-}
-
-html.atomic-theme-white #footer-bottom a {
-  color: #111 !important;
-}
-
-html.atomic-theme-white #footer-bottom-up {
-  color: #111 !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-  background: rgba(0, 0, 0, 0.04) !important;
-}
-
-html.atomic-theme-white .atomic-footer-text-shadow {
-  stroke: rgba(17, 17, 17, 0.15) !important;
-}
-
-html.atomic-theme-white .atomic-footer-text-draw {
-  stroke: #ff6a00 !important;
-}
-
-/* Page extra sections (about page etc.) */
-html.atomic-theme-white #page-extra-sections {
-  background:
-    radial-gradient(900px 520px at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
-    linear-gradient(180deg, rgba(18, 16, 20, 0.94), rgba(8, 7, 9, 0.98)) !important;
-}
-
-/* Header menu dropdown in white theme */
-html.atomic-theme-white #header-menu {
-  color: #111 !important;
-}
-
-html.atomic-theme-white .header-menu-link {
-  color: #111 !important;
-}
-
-html.atomic-theme-white #header-menu-newsletter-title {
-  color: #111 !important;
-}
-
-html.atomic-theme-white #header-menu-talk {
-  color: #111 !important;
-}
-
-html.atomic-theme-white #header-background.--opened {
-  background: rgba(248, 248, 250, 0.92) !important;
-}
-
-/* About page sections */
-html.atomic-theme-white .about-capability-card,
-html.atomic-theme-white .about-who-section,
-html.atomic-theme-white .about-team-section {
-  color: #111 !important;
-}
-
-html.atomic-theme-white .about-capability-card * {
-  color: inherit !important;
-}
-
-/* Contact scroll-to button fix */
-html.atomic-theme-white button.header-menu-link {
-  color: #111 !important;
+#ui::before,
+#ui::after,
+#page-extra-sections::before,
+#page-extra-sections::after,
+#end-section::before,
+#end-section::after,
+#footer-section::before,
+#footer-section::after,
+.atomic-footer-background-gradient,
+html.atomic-theme-dark #ui::before,
+html.atomic-theme-dark #ui::after,
+html.atomic-theme-dark #footer-section::before,
+html.atomic-theme-dark #footer-section::after,
+html.atomic-theme-dark .atomic-footer-background-gradient,
+html.atomic-theme-white #ui::before,
+html.atomic-theme-white #ui::after,
+html.atomic-theme-white #footer-section::before,
+html.atomic-theme-white #footer-section::after,
+html.atomic-theme-white .atomic-footer-background-gradient {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 0 !important;
 }

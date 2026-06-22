@@ -7,17 +7,18 @@ admin/node_modules
 backend/node_modules
 admin/dist
 backend/uploads
+lusion.co landing page(1)/lusion.co/components
 *.log
 *.err
-*-check.png
-live-*.png
-hero-*.png
-footer-*.png
-theme-*.png
-two-theme-*.png
-reconnected-*.png
-atomic-*.png
-lusion-smoke*.png
+/footer-*.png
+/hero-*.png
+/live-*.png
+/theme-*.png
+/two-theme-*.png
+/reconnected-*.png
+/atomic-*.png
+/lusion-smoke*.png
+/*-check.png
 chrome-stdout.txt
 chrome-stderr.txt
 powershell.cmd

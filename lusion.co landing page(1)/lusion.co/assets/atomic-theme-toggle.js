@@ -2,6 +2,8 @@
   var EMAIL = "info@atomicmedia.in";
   var INSTAGRAM = "https://www.instagram.com/atomic.media.in?igsh=MWFrbGh3a3ppbnMwaQ==";
   var LINKEDIN = "https://www.linkedin.com/company/atomic-mediaa/";
+  var THEME_KEY = "atomic-media-selected-theme";
+  var currentTheme = "dark";
 
   function savedTheme() {
     try {
@@ -9,22 +11,28 @@
       localStorage.removeItem("atomic-media-theme-v2");
       localStorage.removeItem("atomic-media-theme-v3");
       localStorage.removeItem("atomic-media-theme-v4");
+      return localStorage.getItem(THEME_KEY) === "white" ? "white" : "dark";
     } catch (error) {
     }
     return "dark";
   }
 
   function applyTheme(theme) {
-    var isDark = theme === "dark";
+    currentTheme = theme === "white" ? "white" : "dark";
+    var isDark = currentTheme === "dark";
     var root = document.documentElement;
-    root.classList.remove("is-white-bg", "is-black-bg", "is-blue-bg");
+    Array.from(root.classList).forEach(function (className) {
+      if (/^is-(white|black|blue)-bg$/.test(className) || (/^atomic-theme-/.test(className) && className !== "atomic-theme-dark" && className !== "atomic-theme-white")) {
+        root.classList.remove(className);
+      }
+    });
     root.classList.toggle("atomic-theme-dark", isDark);
     root.classList.toggle("atomic-theme-white", !isDark);
     root.style.colorScheme = isDark ? "dark" : "light";
     var toggle = document.querySelector("[data-atomic-theme-toggle]");
     if (toggle) {
       toggle.setAttribute("aria-pressed", String(isDark));
-      toggle.setAttribute("aria-label", isDark ? "Switch to white theme" : "Switch to dark theme");
+      toggle.setAttribute("aria-label", isDark ? "Switch to white theme" : "Switch to black theme");
       toggle.querySelector("[data-theme-dark]").setAttribute("aria-current", isDark ? "true" : "false");
       toggle.querySelector("[data-theme-white]").setAttribute("aria-current", isDark ? "false" : "true");
     }
@@ -34,9 +42,7 @@
     var root = document.documentElement;
     if (lockThemeClasses.observer || !window.MutationObserver) return;
     lockThemeClasses.observer = new MutationObserver(function () {
-      if (root.classList.contains("is-white-bg") || root.classList.contains("is-black-bg") || root.classList.contains("is-blue-bg")) {
-        root.classList.remove("is-white-bg", "is-black-bg", "is-blue-bg");
-      }
+      applyTheme(currentTheme);
     });
     lockThemeClasses.observer.observe(root, { attributes: true, attributeFilter: ["class"] });
   }
@@ -47,6 +53,7 @@
       localStorage.removeItem("atomic-media-theme-v2");
       localStorage.removeItem("atomic-media-theme-v3");
       localStorage.removeItem("atomic-media-theme-v4");
+      localStorage.setItem(THEME_KEY, theme === "white" ? "white" : "dark");
     } catch (error) {}
     applyTheme(theme);
   }
